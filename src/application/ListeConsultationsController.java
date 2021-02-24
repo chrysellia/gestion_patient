@@ -7,15 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.models.Consultation;
 import application.models.Database;
-import application.models.ListeConsultations;
-import application.models.Patient;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -24,21 +21,23 @@ import javafx.scene.control.TableColumn;
 
 public class ListeConsultationsController {
 	
-	private ArrayList<ListeConsultations> listConsultations = new ArrayList<ListeConsultations>();
+	private ArrayList<Consultation> listConsultations = new ArrayList<Consultation>();
 	@FXML
-	private TableView<ListeConsultations> tbView4;
+	private TableView<Consultation> tbView4;
 	@FXML
-	private TableColumn<ListeConsultations, Integer> colId;
+	private TableColumn<Consultation, Integer> colId;
 	@FXML
-	private TableColumn<ListeConsultations, Integer> colPatient;
+	private TableColumn<Consultation, Integer> colPatient;
 	@FXML
-	private TableColumn<ListeConsultations, Integer> colMedecin;
+	private TableColumn<Consultation, Integer> colMedecin;
 	@FXML
-	private TableColumn<ListeConsultations, Date> colDateConsultation;
+	private TableColumn<Consultation, Date> colDateConsultation;
 	@FXML
-	private TableColumn<ListeConsultations, String> colObservations;
+	private TableColumn<Consultation, String> colObservations;
 	@FXML
     private Button addFacture;
+	
+	private Consultation selectedConsultation;
 	
 	@FXML
     void handleButtonAction(javafx.event.ActionEvent mouseEvent) {
@@ -59,44 +58,88 @@ public class ListeConsultationsController {
         }
 	}
 	
-	private ResultSet getAllConsultations() {
-		Database db = new Database();
-		db.connect();
-		ResultSet rs = db.execute("SELECT * FROM consultations");
-		return rs;
+	private void loadStage(String fxml, Consultation consultation) {
+		try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            Stage stage = new Stage();
+            
+            if (consultation.getId() > 0) {
+            	
+            }
+            
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
-	private void initialize() {
+	private ResultSet getAllConsultations() {
+		Database db = new Database();
+    	db.connect();
+    	ResultSet rs = db.execute("SELECT \r\n" + 
+    			"	consultations.id,\r\n" + 
+    			"   CONCAT(patients.nom, \" \", patients.prenom) AS patient,\r\n" + 
+    			"   medecins.nom AS medecin,\r\n" + 
+    			"   consultations.dateConsultation,\r\n" + 
+    			"   consultations.observations\r\n" + 
+    			"FROM `consultations`\r\n" + 
+    			"INNER JOIN patients ON patients.id = consultations.patient_id\r\n" + 
+    			"INNER JOIN medecins ON medecins.id = consultations.medecin_id");
+    	
+    	return rs;
+	}
+	
+	public void initialize() {
 		initTable();
+		addFacture.setDisable(true);
+		
+		tbView4.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
+			if (newSelection != null) {
+				fillEditConsultation(newSelection);
+		    }
+		});
 	}
 	
 	private void initTable() {
-		colId.setCellValueFactory(new PropertyValueFactory<ListeConsultations, Integer>("id"));
-		colPatient.setCellValueFactory(new PropertyValueFactory<ListeConsultations, Integer>("patient"));
-		colMedecin.setCellValueFactory(new PropertyValueFactory<ListeConsultations, Integer>("medecin"));
-		colDateConsultation.setCellValueFactory(new PropertyValueFactory<ListeConsultations, Date>("dateConsultation"));
-		colObservations.setCellValueFactory(new PropertyValueFactory<ListeConsultations, String>("observations"));
+		colId.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("id"));
+		colPatient.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("patient"));
+		colMedecin.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("medecin"));
+		colDateConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, Date>("dateConsultation"));
+		colObservations.setCellValueFactory(new PropertyValueFactory<Consultation, String>("observations"));
 	
-		listConsultations = new ArrayList<ListeConsultation>();
-    	ResultSet rs = this.getAllPatients();
-
+		listConsultations = new ArrayList<Consultation>();
+    	ResultSet rs = this.getAllConsultations();
+    	
     	try {
 			while(rs.next()) {
 				int id  = rs.getInt("id");
-				String prenom = rs.getString("prenom");
-
-				Patient patient = new Patient();
-				patient.setId(id);
-				patient.setNom(prenom);
-	
+				String patient = rs.getString("patient");
+				String medecin = rs.getString("medecin");
+				String dateConsultation = rs.getString("dateConsultation");
+				String observations = rs.getString("observations");
 				
-				listPatients.add(patient);
+				Consultation consultation = new Consultation();
+				consultation.setId(id);
+				consultation.setPatient(patient);
+				consultation.setMedecin(medecin);
+				consultation.setDateConsultation(dateConsultation);
+				consultation.setObservations(observations);
+				
+				listConsultations.add(consultation);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-    	tbPatient.getItems().setAll(listPatients);
+    	tbView4.getItems().setAll(listConsultations);
+	}
+	
+	private void fillEditConsultation(Consultation consultation) {
+		this.selectedConsultation = consultation;
+		this.addFacture.setDisable(false);
+		System.out.println(this.selectedConsultation.toString());
 	}
 }

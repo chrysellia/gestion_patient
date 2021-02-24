@@ -22,7 +22,7 @@ public class AccueilController {
 	@FXML
 	private Button btnMedicaments;
 	@FXML
-	private Button btnParametres;
+	private Button btnFactures;
 	
 	@FXML
     void handleClick(javafx.event.ActionEvent mouseEvent) {
@@ -38,17 +38,18 @@ public class AccueilController {
 			loadStage("/application/Patients.fxml");
 		}
 		else
-		if(mouseEvent.getSource() == btnConsultations ) {
-			loadStage("/application/ListeConsultations.fxml");
+			if(mouseEvent.getSource() == btnFactures ) {
+				loadStage("/application/ListeFactures.fxml");
 		}
 		else
 		if(mouseEvent.getSource() == btnMedicaments ) {
 			loadStage("/application/Medicaments.fxml");
 		}
 		else
-		if(mouseEvent.getSource() == btnParametres ) {
-			loadStage("/application/Parametres.fxml");
+		if(mouseEvent.getSource() == btnConsultations ) {
+			loadStage("/application/ListeConsultations.fxml");
 		}
+		
     }
 	
 	private void loadStage(String fxml) {
