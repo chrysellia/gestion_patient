@@ -29,7 +29,6 @@
             <TableColumn fx:id="colMedecin" prefWidth="131.33331298828125" text="Nom du médecin" />
             <TableColumn fx:id="colDateConsultation" prefWidth="148.00009155273438" text="Date de consultation" />
             <TableColumn fx:id="colObservations" prefWidth="110.0" text="Observations" />
-            <TableColumn fx:id="colMontant" prefWidth="110.66664632161462" text="Montant" />
         </columns>
          <padding>
             <Insets left="10.0" />
@@ -68,7 +67,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #6d597a;" text="Générer une facture" textFill="#f5f1f1">
+            <Button fx:id="addFacture" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #6d597a;" text="Créer une facture" textFill="#f5f1f1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

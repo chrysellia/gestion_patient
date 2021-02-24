@@ -9,7 +9,9 @@ import java.util.List;
 import application.MedicamentsController.Action;
 import application.models.Database;
 import application.models.Medecin;
+import application.models.Medicament;
 import application.models.NewConsultation;
+import application.models.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,165 +26,103 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class NewConsultationController {
 	
-	private List<NewConsultation> listNewConsultation;
-	private Action action;
-	private NewConsultation editConsultation = null;
+	private ArrayList<Patient> listPatients = new ArrayList<Patient>();
+	private ArrayList<Medecin> listMedecins = new ArrayList<Medecin>();
 	
-	private List<String> patientList;
-	private List<String> medecinList;
+    @FXML
+    private TableView<Patient> tbPatient;
 
-    @FXML private TextField txtPatient;
-    @FXML private TextField txtMedecin;
-    @FXML private TextField txtConsultation;
-    @FXML private TextArea txtObservation;
+    @FXML
+    private TableColumn<Patient, String> colPatient;
 
-    @FXML private ChoiceBox<String> selectPatient;
-    @FXML private ChoiceBox<String> selectMedecin;
+    @FXML
+    private TableView<Medecin> tbMedecin;
+
+    @FXML
+    private TableColumn<Medecin, String> colMedecin;
+
+    @FXML
+    private TextArea txtObservation;
+
     @FXML private Button btnEnregistrer;
 
     @FXML private TableView<NewConsultation> tbConsultation;
     @FXML private TableColumn<NewConsultation, Integer> colId;
-    @FXML private TableColumn<NewConsultation, String> colPatient;
-    @FXML private TableColumn<NewConsultation, String> colMedecin;
+    @FXML private TableColumn<NewConsultation, String> colPatientConsultation;
+    @FXML private TableColumn<NewConsultation, String> colMedecinConsultation;
     @FXML private TableColumn<NewConsultation, String> colConsultation;
     @FXML private TableColumn<NewConsultation, String> colObservations; 
 
+    @FXML
+    void saveConsultation(ActionEvent event) {
 
-    public ResultSet getAllConsultations() {
-    	Database db = new Database();
-    	db.connect();
-    	ResultSet rs = db.execute("SELECT * FROM consultations");
-		return rs;
     }
     
-    public ResultSet fillChoiceBox() {
+    public ResultSet getAllPatients() {
     	Database db = new Database();
     	db.connect();
-    	String sql_patient = "SELECT prenom FROM patients";
-    	
-    	return db.execute(sql_patient);
+    	ResultSet rs = db.execute("SELECT * from patients");
+    	return rs;
     }
     
-    public ResultSet setChoiceBox() {
+    public ResultSet getAllMedecins() {
     	Database db = new Database();
     	db.connect();
-    	String sql_medecin = "SELECT nom FROM medecins";
-    	return db.execute(sql_medecin);
+    	ResultSet rs1 = db.execute("SELECT * from medecins");
+    	return rs1;
     }
     
     public void initialize() {
-    	ResultSet res_patient = this.fillChoiceBox();
-    	ResultSet res_medecin = this.setChoiceBox();
-    	
-    	try {
-			while(res_patient.next()) {
-				String prenom  = res_patient.getString("prenom");
-				
-				selectPatient.getItems().add(prenom);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	try {
-			while(res_medecin.next()) {
-				String nom = res_medecin.getString("nom");
-				
-				selectMedecin.getItems().add(nom);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		action = new Action("ADD");	
-		btnEnregistrer.setOnAction(addHandler);
-		initTable();
-		tbConsultation.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
-		    if (newSelection != null) {
-		        fillEdit(newSelection);
-		    }
-		}); 
-	}
+    	initTable();
+    }
     
-    public void insertConsultation() {
-		Database db = new Database();
-		db.connect();
-		String patientValue = txtPatient.getText();
-		String medecinValue = txtMedecin.getText();
-		String observationValue = txtObservation.getText();
-		String sql = "INSERT INTO consultations (patient, medecin, observations) VALUES ('" + patientValue + "','" + medecinValue +"', '" + observationValue +"')";
-		db.update(sql);
-		
-		this.initTable();
-	}
+    public void initTable() {
+    	colPatient.setCellValueFactory(new PropertyValueFactory<Patient, String>("nom"));
+    	
+    	listPatients = new ArrayList<Patient>();
+    	ResultSet rs = this.getAllPatients();
 
-    private void initTable() {
-		colId.setCellValueFactory(new PropertyValueFactory<NewConsultation, Integer>("id"));
-		colPatient.setCellValueFactory(new PropertyValueFactory<NewConsultation, String>("patient"));
-		colMedecin.setCellValueFactory(new PropertyValueFactory<NewConsultation, String>("medecin"));
-		colObservations.setCellValueFactory(new PropertyValueFactory<NewConsultation, String>("observations"));
-		
-		listNewConsultation = new ArrayList<NewConsultation>();
-		
-		ResultSet rs = this.getAllConsultations();
-		
-		try {
+    	try {
 			while(rs.next()) {
 				int id  = rs.getInt("id");
-				String patient = rs.getString("patient");
-				String medecin = rs.getString("medecin");
-				String observations = rs.getString("observations");
+				String prenom = rs.getString("prenom");
+
+				Patient patient = new Patient();
+				patient.setId(id);
+				patient.setNom(prenom);
+	
 				
-				NewConsultation consultation = new NewConsultation();
-				consultation.setId(id);
-				consultation.setPatient(patient);
-				consultation.setMedecin(medecin);
-				consultation.setObservations(observations);
-				
-				listNewConsultation.add(consultation);
+				listPatients.add(patient);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		tbConsultation.getItems().setAll(listNewConsultation);
-	}
-	    
-    private void fillEdit(NewConsultation newConsultation) {
-    	txtPatient.setText(newConsultation.getPatient());
-    	txtMedecin.setText(newConsultation.getMedecin());
-    	txtObservation.setText(newConsultation.getObservations());
+    	
+    	tbPatient.getItems().setAll(listPatients);
+    	
+    	colMedecin.setCellValueFactory(new PropertyValueFactory<Medecin, String>("nom"));
+    	
+    	listMedecins = new ArrayList<Medecin>();
+    	ResultSet rs1 = this.getAllMedecins();
+    	
+    	try {
+			while(rs1.next()) {
+				int id  = rs1.getInt("id");
+				String nom = rs1.getString("nom");
 
-		this.action.setType("EDIT");
-		
-		this.editConsultation = newConsultation;
-	}
-    
-    
-    EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
-		@Override
-    	public void handle(ActionEvent event) {
-			insertConsultation();
-		}
-	};
+				Medecin medecin = new Medecin();
+				medecin.setId(id);
+				medecin.setNom(nom);
 	
-	
-	class Action {
-		private String type;
-		
-		public Action(String type) {
-			this.type = type;
+				
+				listMedecins.add(medecin);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-	}
+    	
+    	tbMedecin.getItems().setAll(listMedecins);
+    }
 }

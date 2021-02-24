@@ -59,12 +59,25 @@ public class Database {
 		return this.rs;
 	}
 	
-	public void update(String sql) {
+	public ResultSet update(String sql) {
 		try {
 			this.stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return rs;
+	}
+	
+	public Statement prepare(String sql, String[] columns) {
+		Statement stmt = null;
+		try {
+			stmt = this.conn.prepareStatement(sql, columns);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return stmt;
 	}
 }

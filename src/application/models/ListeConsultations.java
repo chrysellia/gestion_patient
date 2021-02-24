@@ -1,20 +1,19 @@
-package application;
+package application.models;
+
+import java.util.Date;
 
 public class ListeConsultations {
 	private Integer id;
 	private Integer medecin_id;
 	private Integer patient_id;
-	private Integer date_visite;
-	private Double montant;
+	private Date date_consultation;
 	
-	public ListeConsultations(Integer id, Integer medecin_id, Integer patient_id, Integer date_visite,
-			Double montant) {
+	public ListeConsultations(Integer id, Integer medecin_id, Integer patient_id, Date date_consultation) {
 		super();
 		this.id = id;
 		this.medecin_id = medecin_id;
 		this.patient_id = patient_id;
-		this.date_visite = date_visite;
-		this.montant = montant;
+		this.date_consultation = date_consultation;
 	}
 
 	public Integer getId() {
@@ -41,19 +40,11 @@ public class ListeConsultations {
 		this.patient_id = patient_id;
 	}
 
-	public Integer getDate_visite() {
-		return date_visite;
+	public Date getDate_consultation() {
+		return date_consultation;
 	}
 
-	public void setDate_visite(Integer date_visite) {
-		this.date_visite = date_visite;
-	}
-
-	public Double getMontant() {
-		return montant;
-	}
-
-	public void setMontant(Double montant) {
-		this.montant = montant;
+	public void setDate_Consultation(Date date_consultation) {
+		this.date_consultation = date_consultation;
 	}
 }

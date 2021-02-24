@@ -2,16 +2,14 @@ package application.models;
 
 public class Medicament {
 	private int id;
-	private String nom;
 	private String designation;
-	private Double prix;
+	private String prix;
 	
 	public Medicament() {}
 	
-	public Medicament(int id, String nom, String designation, Double prix) {
+	public Medicament(int id, String nom, String designation, String prix) {
 		super();
 		this.id = id;
-		this.nom = nom;
 		this.designation = designation;
 		this.prix = prix;
 	}
@@ -24,14 +22,6 @@ public class Medicament {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
 	public String getDesignation() {
 		return designation;
 	}
@@ -40,14 +30,13 @@ public class Medicament {
 		this.designation = designation;
 	}
 
-	public Double getPrix() {
+	public String getPrix() {
 		return prix;
 	}
 
-	public void setPrix(Double prix) {
+	public void setPrix(String prix) {
+		// TODO Auto-generated method stub
 		this.prix = prix;
-	}
-
-	
+	}	
 	
 }

@@ -27,8 +27,6 @@ public class MedicamentsController {
 	private Medicament editMedicament = null;
 	
 	@FXML
-	private TextField txtNom;
-	@FXML
 	private TextField txtDesignation;
 	@FXML
 	private TextField txtPrix;
@@ -43,11 +41,9 @@ public class MedicamentsController {
 	@FXML
 	private TableColumn<Medicament, Integer> colId;
 	@FXML
-	private TableColumn<Medicament, String> colNom;
-	@FXML
 	private TableColumn<Medicament, String> colDesignation;
 	@FXML
-	private TableColumn<Medicament, Double> colPrix;
+	private TableColumn<Medicament, String> colPrix;
     
     public ResultSet getAllMedicaments() {
     	Database db = new Database();
@@ -74,9 +70,8 @@ public class MedicamentsController {
 	
 	private void initTable() {
 		colId.setCellValueFactory(new PropertyValueFactory<Medicament, Integer>("id"));
-		colNom.setCellValueFactory(new PropertyValueFactory<Medicament, String>("nom"));
 		colDesignation.setCellValueFactory(new PropertyValueFactory<Medicament, String>("designation"));
-		colPrix.setCellValueFactory(new PropertyValueFactory<Medicament, Double>("prix"));;
+		colPrix.setCellValueFactory(new PropertyValueFactory<Medicament, String>("prix"));;
 		
 		listMedicament = new ArrayList<Medicament>();
 		
@@ -85,13 +80,11 @@ public class MedicamentsController {
 		try {
 			while(rs.next()) {
 				int id  = rs.getInt("id");
-				String nom = rs.getString("nom");
 				String designation = rs.getString("designation");
-				double prix = rs.getDouble("prix");
+				String prix = rs.getString("prix");
 				
 				Medicament medicament = new Medicament();
 				medicament.setId(id);
-				medicament.setNom(nom);
 				medicament.setDesignation(designation);
 				medicament.setPrix(prix);
 
@@ -109,10 +102,9 @@ public class MedicamentsController {
 	 public void insertMedicament() {
 			Database db = new Database();
 			db.connect();
-			String nomValue = txtNom.getText();
 			String designationValue = txtDesignation.getText();
 			String prixValue = txtPrix.getText();
-			String sql = "INSERT INTO medicaments (nom, designation,prix) VALUES ('" + nomValue + "', '" + designationValue + "','" + prixValue +"')";
+			String sql = "INSERT INTO medicaments ( designation,prix) VALUES ('" + designationValue + "','" + prixValue +"')";
 			db.update(sql);
 			
 			this.initTable();
@@ -122,11 +114,10 @@ public class MedicamentsController {
 			Database db = new Database();
 			db.connect();
 			
-			String nomValue = txtNom.getText();
 			String designationValue = txtDesignation.getText();
 			String prixValue = txtPrix.getText();
 			
-			String sql = "UPDATE medicaments SET nom='" + nomValue + "', designation='" + designationValue + "', prix='" + prixValue +"' WHERE id = " + id + " LIMIT 1";
+			String sql = "UPDATE medicaments SET  designation='" + designationValue + "', prix='" + prixValue +"' WHERE id = " + id + " LIMIT 1";
 			db.update(sql);
 			
 			this.action.setType("ADD");
@@ -149,9 +140,8 @@ public class MedicamentsController {
 		}
 	    
 	    private void fillEdit(Medicament medicament) {
-			txtNom.setText(medicament.getNom());
 			txtDesignation.setText(medicament.getDesignation());
-			txtPrix.setText(String.valueOf(medicament.getPrix()));
+			txtPrix.setText(medicament.getPrix());
 
 			this.action.setType("EDIT");
 			this.refreshAction();
@@ -167,7 +157,6 @@ public class MedicamentsController {
 				btnEdit.setDisable(true);
 				btnDelete.setDisable(true);
 				
-				txtNom.setText("");
 				txtDesignation.setText("");
 				txtPrix.setText("");
 			} else if (action_type == "EDIT") {
