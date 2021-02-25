@@ -310,6 +310,6 @@ public class FactureController {
 	
 	public void showInformation(int selectedConsultation_id) {
 		// TODO Auto-generated method stub
-		colIdFacture.setId(selectedConsultation_id);
+		//colIdFacture.setId(selectedConsultation_id);
 	}
 }

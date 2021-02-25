@@ -27,27 +27,27 @@ public class AccueilController {
 	@FXML
     void handleClick(javafx.event.ActionEvent mouseEvent) {
 		if(mouseEvent.getSource() == btnNewConsultation ) {
-			loadStage("/application/NewConsultation.fxml");
+			loadStage("/application/views/NewConsultation.fxml");
 		}
 		else
 		if(mouseEvent.getSource() == btnMedecins ) {
-			loadStage("/application/Medecins.fxml");
+			loadStage("/application/views/Medecins.fxml");
 		}
 		else
 		if(mouseEvent.getSource() == btnPatients ) {
-			loadStage("/application/Patients.fxml");
+			loadStage("/application/views/Patients.fxml");
 		}
 		else
 			if(mouseEvent.getSource() == btnFactures ) {
-				loadStage("/application/ListeFactures.fxml");
+				loadStage("/application/views/ListeFactures.fxml");
 		}
 		else
 		if(mouseEvent.getSource() == btnMedicaments ) {
-			loadStage("/application/Medicaments.fxml");
+			loadStage("/application/views/Medicaments.fxml");
 		}
 		else
 		if(mouseEvent.getSource() == btnConsultations ) {
-			loadStage("/application/ListeConsultations.fxml");
+			loadStage("/application/views/ListeConsultations.fxml");
 		}
 		
     }
