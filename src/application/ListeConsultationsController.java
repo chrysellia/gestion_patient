@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import application.models.Consultation;
 import application.models.Database;
@@ -42,9 +43,26 @@ public class ListeConsultationsController {
 	@FXML
     void handleButtonAction(javafx.event.ActionEvent mouseEvent) {
 		if(mouseEvent.getSource() == addFacture ) {
-			loadStage("/application/Facture.fxml");
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Facture.fxml"));
+			Parent root;
+			try {
+				root = loader.load();
+				//Récupérer le controller du deuxième scène
+				FactureController facture = loader.getController();
+				facture.showInformation(this.selectedConsultation.getId());
+				
+				//Afficher les éléments dans la deuxième scène
+				Stage stage = new Stage();
+				stage.setScene(new Scene(root));
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-    }
+	} 
 	
 	private void loadStage(String fxml) {
 		try {
@@ -63,9 +81,9 @@ public class ListeConsultationsController {
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
             Stage stage = new Stage();
             
-            if (consultation.getId() > 0) {
+            /*if (consultation.getId() > 0) {
             	
-            }
+            }*/
             
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);

@@ -46,10 +46,10 @@
             <Button fx:id="btnMedecins" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Gestion des médecins" GridPane.columnIndex="2">
                
             </Button>
-            <Button fx:id="btnFactures" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Liste des factures" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="btnMedicaments" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Gestion des médicaments" GridPane.columnIndex="2" GridPane.rowIndex="1">
               
             </Button>
-            <Button fx:id="btnMedicaments" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" stylesheets="application.css" text="Gestion des médicaments" GridPane.rowIndex="1">
+            <Button fx:id="btnFactures" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" stylesheets="application.css" text="Liste des Factures" GridPane.rowIndex="1">
        
             </Button>
             <Button fx:id="btnConsultations" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" stylesheets="application.css" text="Gestion des consultations" GridPane.columnIndex="1" GridPane.rowIndex="1" />

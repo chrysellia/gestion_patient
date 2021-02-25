@@ -1,14 +1,13 @@
 package application;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.sql.*;
 
 import application.PatientsController.Action;
+import application.models.Consultation;
 import application.models.Database;
 import application.models.Facture;
 import application.models.FactureContenu;
@@ -50,6 +49,7 @@ public class FactureController {
     @FXML private TableColumn<FactureContenu, String> colQuantite;
     @FXML private TableColumn<FactureContenu, String> colPrixUnitaire;
     @FXML private TableColumn<FactureContenu, String> colTotal;
+    @FXML private TableColumn<FactureContenu, Integer> colIdFacture;
     
     
     @FXML private Label textTotal;
@@ -76,29 +76,6 @@ public class FactureController {
     void hanldeButtonAction(ActionEvent event) {
 
     }
-    
-    @FXML
-    private Button btnFacture;
-    
-    @FXML
-    void generateFacture(javafx.event.ActionEvent mouseEvent) {
-    	if(mouseEvent.getSource() == btnFacture ) {
-			loadStage("/application/ShowFacture.fxml");
-		}
-    }
-    
-    private void loadStage(String fxml) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
     
     public void initialize() {
 		initTable();
@@ -330,4 +307,9 @@ public class FactureController {
 			
 		}
 	};
+	
+	public void showInformation(int selectedConsultation_id) {
+		// TODO Auto-generated method stub
+		colIdFacture.setId(selectedConsultation_id);
+	}
 }

@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MedicamentsController">
    <children>
       <Pane prefHeight="133.0" prefWidth="853.0" style="-fx-background-color: #f6bd60;">
@@ -72,11 +71,11 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tbView3" layoutX="427.0" layoutY="223.0" prefHeight="406.0" prefWidth="415.0">
+      <TableView fx:id="tbView3" layoutX="450.0" layoutY="222.0" prefHeight="406.0" prefWidth="363.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="83.99993896484375" text="ID" />
-            <TableColumn fx:id="colDesignation" minWidth="6.666748046875" prefWidth="106.0" text="Désignation" />
-            <TableColumn fx:id="colPrix" prefWidth="88.66664632161456" text="Prix" />
+            <TableColumn fx:id="colDesignation" minWidth="6.666748046875" prefWidth="193.33331298828125" text="Désignation" />
+            <TableColumn fx:id="colPrix" prefWidth="84.0" text="Prix" />
         </columns>
       </TableView>
       <Label layoutX="434.0" layoutY="166.0" text="Liste des médicaments">

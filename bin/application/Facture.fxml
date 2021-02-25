@@ -61,7 +61,7 @@
         </columns>
       </TableView>
       <Label fx:id="textTotal" layoutX="801.0" layoutY="541.0" text="0 Ar" />
-      <Button fx:id="btnFacture" layoutX="709.0" layoutY="591.0" mnemonicParsing="false" onAction="#generateFacture" prefHeight="25.0" prefWidth="131.0" text="Imprimer la facture">
+      <Button fx:id="btnFacture" layoutX="709.0" layoutY="591.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Imprimer la facture">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
