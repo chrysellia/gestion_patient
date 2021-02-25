@@ -1,71 +1,55 @@
 package application.models;
 
+import java.util.Date;
+
 public class Facture {
-	private Integer id;
-	private String nom;
-	private String designation;
-	private String prix;
-	private String total;
-	private String quantite;
+	private Integer factureId;
+	private String medecin;
+	private String patient;
+	private Date dateConsultation;
+	private String montantTotal;
 	
-	public Facture(Integer id, String nom, String designation, String prix, String total, String quantite) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.designation = designation;
-		this.prix = prix;
-		this.total = total;
-		this.quantite = quantite;
-	}
-
-	public String getId() {
-		return nom;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public Facture( ) {}
+	
+	public Integer getFactureId() {
+		return factureId;
 	}
 	
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getPrix() {
-		return prix;
-	}
-
-	public void setPrix(String prix) {
-		this.prix = prix;
-	}
-
-	public String getTotal() {
-		return total;
-	}
-
-	public void setTotal(String total) {
-		this.total = total;
-	}
-
-	public String getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(String quantite) {
-		this.quantite = quantite;
+	public void setFactureId(Integer factureId) {
+		this.factureId = factureId;
 	}
 	
+	public String getMedecin() {
+		return medecin;
+	}
+	
+	public void setMedecin(String medecin) {
+		this.medecin = medecin;
+	}
+	
+	public String getPatient() {
+		return patient;
+	}
+	
+	public void setPatient(String patient) {
+		this.patient = patient;
+	}
+	
+	public Date getDateConsultation() {
+		return dateConsultation;
+	}
+	
+	public void setDateConsultation(Date dateConsultation) {
+		this.dateConsultation = dateConsultation;
+	}
+	
+	public String getMontantTotal() {
+		return montantTotal;
+	}
+	
+	public void setMontantTotal(String montantTotal) {
+		this.montantTotal = montantTotal;
+	}
 	
 	
 }

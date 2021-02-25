@@ -140,11 +140,11 @@ public class ListeConsultationsController {
         
         try {
             root = loader.load();
-            //Rï¿½cupï¿½rer le controller du deuxiï¿½me scï¿½ne
+            //Récupérer le controller du deuxiï¿½me scï¿½ne
             FactureController facture = loader.getController();
             facture.setConsultation(this.selectedConsultation);
             
-            //Afficher les ï¿½lï¿½ments dans la deuxiï¿½me scï¿½ne
+            //Afficher les éléments dans la deuxième scène
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
