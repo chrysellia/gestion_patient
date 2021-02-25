@@ -193,7 +193,7 @@ public class MedecinsController {
 			}
 		}
 	    
-	    EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
+    EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
 			@Override
 	    	public void handle(ActionEvent event) {
 				insertMedecin();

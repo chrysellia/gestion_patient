@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 import application.models.Consultation;
 import application.models.Database;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
@@ -23,46 +25,16 @@ import javafx.scene.control.TableColumn;
 public class ListeConsultationsController {
 	
 	private ArrayList<Consultation> listConsultations = new ArrayList<Consultation>();
-	@FXML
-	private TableView<Consultation> tbView4;
-	@FXML
-	private TableColumn<Consultation, Integer> colId;
-	@FXML
-	private TableColumn<Consultation, Integer> colPatient;
-	@FXML
-	private TableColumn<Consultation, Integer> colMedecin;
-	@FXML
-	private TableColumn<Consultation, Date> colDateConsultation;
-	@FXML
-	private TableColumn<Consultation, String> colObservations;
-	@FXML
-    private Button addFacture;
+
+	@FXML private TableView<Consultation> tblListConsultation;
+	@FXML private TableColumn<Consultation, Integer> colId;
+	@FXML private TableColumn<Consultation, Integer> colPatient;
+	@FXML private TableColumn<Consultation, Integer> colMedecin;
+	@FXML private TableColumn<Consultation, Date> colDateConsultation;
+	@FXML private TableColumn<Consultation, String> colObservations;
+	@FXML private Button btnAddFacture;
 	
 	private Consultation selectedConsultation;
-	
-	@FXML
-    void handleButtonAction(javafx.event.ActionEvent mouseEvent) {
-		if(mouseEvent.getSource() == addFacture ) {
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Facture.fxml"));
-			Parent root;
-			try {
-				root = loader.load();
-				//Récupérer le controller du deuxième scène
-				FactureController facture = loader.getController();
-				facture.showInformation(this.selectedConsultation.getId());
-				
-				//Afficher les éléments dans la deuxième scène
-				Stage stage = new Stage();
-				stage.setScene(new Scene(root));
-				stage.show();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-	} 
 	
 	private void loadStage(String fxml) {
 		try {
@@ -81,10 +53,6 @@ public class ListeConsultationsController {
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
             Stage stage = new Stage();
             
-            /*if (consultation.getId() > 0) {
-            	
-            }*/
-            
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
@@ -100,7 +68,7 @@ public class ListeConsultationsController {
     			"	consultations.id,\r\n" + 
     			"   CONCAT(patients.nom, \" \", patients.prenom) AS patient,\r\n" + 
     			"   medecins.nom AS medecin,\r\n" + 
-    			"   consultations.dateConsultation,\r\n" + 
+    			"   DATE_FORMAT(consultations.dateConsultation, \"%d/%m/%Y\") AS dateConsultation,\r\n" + 
     			"   consultations.observations\r\n" + 
     			"FROM `consultations`\r\n" + 
     			"INNER JOIN patients ON patients.id = consultations.patient_id\r\n" + 
@@ -111,12 +79,13 @@ public class ListeConsultationsController {
 	
 	public void initialize() {
 		initTable();
-		addFacture.setDisable(true);
+		btnAddFacture.setDisable(true);
+		btnAddFacture.setOnAction(this.addHandler);
 		
-		tbView4.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
+		tblListConsultation.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
 			if (newSelection != null) {
-				fillEditConsultation(newSelection);
-		    }
+				selectConsultation(newSelection);
+      }
 		});
 	}
 	
@@ -128,9 +97,9 @@ public class ListeConsultationsController {
 		colObservations.setCellValueFactory(new PropertyValueFactory<Consultation, String>("observations"));
 	
 		listConsultations = new ArrayList<Consultation>();
-    	ResultSet rs = this.getAllConsultations();
+		ResultSet rs = this.getAllConsultations();
     	
-    	try {
+	    try {
 			while(rs.next()) {
 				int id  = rs.getInt("id");
 				String patient = rs.getString("patient");
@@ -152,12 +121,39 @@ public class ListeConsultationsController {
 			e.printStackTrace();
 		}
     	
-    	tbView4.getItems().setAll(listConsultations);
+    	tblListConsultation.getItems().setAll(listConsultations);
 	}
+
+    private void createFacture () {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/Facture.fxml"));
+        Parent root;
+        
+        try {
+            root = loader.load();
+            //Rï¿½cupï¿½rer le controller du deuxiï¿½me scï¿½ne
+            FactureController facture = loader.getController();
+            facture.setConsultation(this.selectedConsultation);
+            
+            //Afficher les ï¿½lï¿½ments dans la deuxiï¿½me scï¿½ne
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 	
-	private void fillEditConsultation(Consultation consultation) {
+	EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
+		@Override
+    	public void handle(ActionEvent event) {
+			createFacture();
+		}
+	};
+
+	
+	private void selectConsultation(Consultation consultation) {
 		this.selectedConsultation = consultation;
-		this.addFacture.setDisable(false);
-		System.out.println(this.selectedConsultation.toString());
+		this.btnAddFacture.setDisable(false);
 	}
 }

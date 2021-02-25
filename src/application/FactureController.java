@@ -35,11 +35,9 @@ public class FactureController {
 	private ArrayList<Medicament> listMedicaments = new ArrayList<Medicament>();
 	private Facture editFacture = null;
 	
-	@FXML
-    private TableView<FactureContenu> tbFacture;
+	@FXML private TableView<FactureContenu> tbFacture;
 	
-    @FXML
-    private TableView<Medicament> tbMedicament;
+    @FXML private TableView<Medicament> tbMedicament;
     
     private Medicament selectedMedicament;
     private FactureContenu selectedItem;
@@ -55,30 +53,20 @@ public class FactureController {
     @FXML private Label textTotal;
     @FXML private Button btnValidate;
 
-    @FXML
-    private Button btnDelete;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private TextField fieldQuantite;
+    @FXML private Button btnDelete;
+    @FXML private Button btnAdd;
+    @FXML private TextField fieldQuantite;
+    @FXML private Label lblPatient;
 
-    @FXML
-    private TableColumn<Medicament, String> colDesignationMedicament;
-    @FXML
-    private TableColumn<Medicament, String> colPrixMedicament;
-
-    @FXML
-    void handleButtonAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void hanldeButtonAction(ActionEvent event) {
-
-    }
+    @FXML private TableColumn<Medicament, String> colDesignationMedicament;
+    @FXML private TableColumn<Medicament, String> colPrixMedicament;
+    
+    private Consultation defaultConsultation;
     
     public void initialize() {
 		initTable();
+		
+		lblPatient.setText("Nom du patient : " + this.defaultConsultation.getPatient());
 		
 		btnAdd.setOnAction(addHandler);
 		btnDelete.setDisable(true);
@@ -154,7 +142,7 @@ public class FactureController {
 	}
 	
 	private void addItem() {
-		//Prendre les éléments du tableau médicament
+		//Prendre les ï¿½lï¿½ments du tableau mï¿½dicament
 		FactureContenu itemFacture = new FactureContenu();
 		String designation = this.selectedMedicament.getDesignation();
 		itemFacture.setDesignation(designation);
@@ -162,7 +150,7 @@ public class FactureController {
 		int quantite = Integer.parseInt(fieldQuantite.getText());
 		itemFacture.setQuantite("" + quantite);
 		
-		//Ajouter des éléments dans le tableau facture
+		//Ajouter des ï¿½lï¿½ments dans le tableau facture
 		itemFacture.setPrixUnitaire("" + prix);
 		int sousTotal = prix * quantite;
 		itemFacture.setSousTotal("" + sousTotal);
@@ -198,7 +186,7 @@ public class FactureController {
 	
 	
 	public void saveFacture() {
-		// 1- Insertion de la facture qui va contenir le détail général*
+		// 1- Insertion de la facture qui va contenir le dï¿½tail gï¿½nï¿½ral*
 		int lastInsertId = 0;
 		try {
 			Database db = new Database();
@@ -222,7 +210,7 @@ public class FactureController {
 			System.out.println("error : " + er.getMessage());
 		}
 		
-		// 2- Insertion de chaque médicament prescrit avec la designation, le prix, la quantite, sous-total et le prix unitaire
+		// 2- Insertion de chaque mï¿½dicament prescrit avec la designation, le prix, la quantite, sous-total et le prix unitaire
 		try {
 			for (int i = 0; i < lignesFacture.size(); i++) {
 				FactureContenu item = lignesFacture.get(i);
@@ -308,8 +296,7 @@ public class FactureController {
 		}
 	};
 	
-	public void showInformation(int selectedConsultation_id) {
-		// TODO Auto-generated method stub
-		//colIdFacture.setId(selectedConsultation_id);
+	public void setConsultation(Consultation consultation) {
+		this.defaultConsultation = consultation;
 	}
 }

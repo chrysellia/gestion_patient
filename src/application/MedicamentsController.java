@@ -26,24 +26,15 @@ public class MedicamentsController {
 	private Action action;
 	private Medicament editMedicament = null;
 	
-	@FXML
-	private TextField txtDesignation;
-	@FXML
-	private TextField txtPrix;
-	@FXML
-	private Button btnAdd;
-	@FXML
-	private Button btnEdit;
-	@FXML
-	private Button btnDelete;
-	@FXML
-	private TableView<Medicament> tbView3;
-	@FXML
-	private TableColumn<Medicament, Integer> colId;
-	@FXML
-	private TableColumn<Medicament, String> colDesignation;
-	@FXML
-	private TableColumn<Medicament, String> colPrix;
+	@FXML private TextField txtDesignation;
+	@FXML private TextField txtPrix;
+	@FXML private Button btnAdd;
+	@FXML private Button btnEdit;
+	@FXML private Button btnDelete;
+	@FXML private TableView<Medicament> tbView3;
+	@FXML private TableColumn<Medicament, Integer> colId;
+	@FXML private TableColumn<Medicament, String> colDesignation;
+	@FXML private TableColumn<Medicament, String> colPrix;
     
     public ResultSet getAllMedicaments() {
     	Database db = new Database();
@@ -99,114 +90,114 @@ public class MedicamentsController {
 		tbView3.getItems().setAll(listMedicament);
 	}
 	
-	 public void insertMedicament() {
-			Database db = new Database();
-			db.connect();
-			String designationValue = txtDesignation.getText();
-			String prixValue = txtPrix.getText();
-			String sql = "INSERT INTO medicaments ( designation,prix) VALUES ('" + designationValue + "','" + prixValue +"')";
-			db.update(sql);
-			
-			this.initTable();
-		}
+    public void insertMedicament() {
+        Database db = new Database();
+        db.connect();
+        String designationValue = txtDesignation.getText();
+        String prixValue = txtPrix.getText();
+        String sql = "INSERT INTO medicaments ( designation,prix) VALUES ('" + designationValue + "','" + prixValue +"')";
+        db.update(sql);
+        
+        this.initTable();
+    }
 	    
-	    public void updateMedicament(int id) {
-			Database db = new Database();
-			db.connect();
-			
-			String designationValue = txtDesignation.getText();
-			String prixValue = txtPrix.getText();
-			
-			String sql = "UPDATE medicaments SET  designation='" + designationValue + "', prix='" + prixValue +"' WHERE id = " + id + " LIMIT 1";
-			db.update(sql);
-			
-			this.action.setType("ADD");
-			
-			this.initTable();
-			this.refreshAction();
-		}
-	    
-	    public void deleteMedicament(int id) {
-			Database db = new Database();
-			db.connect();
-			
-			String sql = "DELETE FROM medicaments WHERE id = " + id + " LIMIT 1";
-			db.update(sql);
-			
-			this.action.setType("ADD");
-			
-			this.initTable();
-			this.refreshAction();
-		}
-	    
-	    private void fillEdit(Medicament medicament) {
-			txtDesignation.setText(medicament.getDesignation());
-			txtPrix.setText(medicament.getPrix());
+    public void updateMedicament(int id) {
+        Database db = new Database();
+        db.connect();
+        
+        String designationValue = txtDesignation.getText();
+        String prixValue = txtPrix.getText();
+        
+        String sql = "UPDATE medicaments SET  designation='" + designationValue + "', prix='" + prixValue +"' WHERE id = " + id + " LIMIT 1";
+        db.update(sql);
+        
+        this.action.setType("ADD");
+        
+        this.initTable();
+        this.refreshAction();
+    }
+    
+    public void deleteMedicament(int id) {
+        Database db = new Database();
+        db.connect();
+        
+        String sql = "DELETE FROM medicaments WHERE id = " + id + " LIMIT 1";
+        db.update(sql);
+        
+        this.action.setType("ADD");
+        
+        this.initTable();
+        this.refreshAction();
+    }
+    
+    private void fillEdit(Medicament medicament) {
+        txtDesignation.setText(medicament.getDesignation());
+        txtPrix.setText(medicament.getPrix());
 
-			this.action.setType("EDIT");
-			this.refreshAction();
-			
-			this.editMedicament = medicament;
-		}
+        this.action.setType("EDIT");
+        this.refreshAction();
+        
+        this.editMedicament = medicament;
+    }
+    
+    private void refreshAction() {
+        String action_type = this.action.getType();
+        
+        if (action_type == "ADD") {
+            btnAdd.setDisable(false);
+            btnEdit.setDisable(true);
+            btnDelete.setDisable(true);
+            
+            txtDesignation.setText("");
+            txtPrix.setText("");
+        } else if (action_type == "EDIT") {
+            btnAdd.setDisable(true);
+            btnEdit.setDisable(false);
+            btnDelete.setDisable(false);
+        }
+    }
 	    
-	    private void refreshAction() {
-			String action_type = this.action.getType();
-			
-			if (action_type == "ADD") {
-				btnAdd.setDisable(false);
-				btnEdit.setDisable(true);
-				btnDelete.setDisable(true);
-				
-				txtDesignation.setText("");
-				txtPrix.setText("");
-			} else if (action_type == "EDIT") {
-				btnAdd.setDisable(true);
-				btnEdit.setDisable(false);
-				btnDelete.setDisable(false);
-			}
-		}
-	    
-	    EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
-			@Override
-	    	public void handle(ActionEvent event) {
-				insertMedicament();
-			}
-		};
+    EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            insertMedicament();
+        }
+    };
 		
-		EventHandler<ActionEvent> updateHandler = new EventHandler<ActionEvent>() {
-			@Override
-	    	public void handle(ActionEvent event) {
-				if (editMedicament != null) {
-					int id = editMedicament.getId();
-					updateMedicament(id);
-				}
-			}
-		};
+    EventHandler<ActionEvent> updateHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            if (editMedicament != null) {
+                int id = editMedicament.getId();
+                updateMedicament(id);
+            }
+        }
+    };
 		
-		EventHandler<ActionEvent> deleteHandler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (editMedicament != null) {
-					int id = editMedicament.getId();
-					deleteMedicament(id);
-				}
-			}
-		};
+    EventHandler<ActionEvent> deleteHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            if (editMedicament != null) {
+                int id = editMedicament.getId();
+                deleteMedicament(id);
+            }
+        }
+    };
 		
-		class Action {
-			private String type;
-			
-			public Action(String type) {
-				this.type = type;
-			}
+    class Action {
+        private String type;
+        
+        public Action(String type) {
+            this.type = type;
+        }
 
-			public String getType() {
-				return type;
-			}
+        public String getType() {
+            return type;
+        }
 
-			public void setType(String type) {
-				this.type = type;
-			}
-		}
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
 
 }

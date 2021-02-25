@@ -1,22 +1,23 @@
 package application;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import application.MedicamentsController.Action;
+
 import application.models.Database;
 import application.models.FactureContenu;
 import application.models.Medecin;
 import application.models.Medicament;
 import application.models.Consultation;
 import application.models.Patient;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -39,14 +40,12 @@ public class NewConsultationController {
 	@FXML private Label lblNomPatient;
 	@FXML private Label lblNomMedecin;
 	
-    @FXML
-    private TableView<Patient> tbPatient;
+    @FXML private TableView<Patient> tbPatient;
 
     @FXML private TableColumn<Patient, Integer> colIdPatient;
     @FXML private TableColumn<Patient, String> colPatient;
 
-    @FXML
-    private TableView<Medecin> tbMedecin;
+    @FXML private TableView<Medecin> tbMedecin;
 
     @FXML private TableColumn<Medecin, Integer> colIdMedecin;
     @FXML private TableColumn<Medecin, String> colMedecin;
@@ -82,7 +81,7 @@ public class NewConsultationController {
     			"	consultations.id,\r\n" + 
     			"   CONCAT(patients.nom, \" \", patients.prenom) AS patient,\r\n" + 
     			"   medecins.nom AS medecin,\r\n" + 
-    			"   consultations.dateConsultation,\r\n" + 
+    			"   DATE_FORMAT(consultations.dateConsultation, \"%d/%m/%Y\") AS dateConsultation,\r\n" + 
     			"   consultations.observations\r\n" + 
     			"FROM `consultations`\r\n" + 
     			"INNER JOIN patients ON patients.id = consultations.patient_id\r\n" + 
@@ -218,7 +217,7 @@ public class NewConsultationController {
     
     private void selectMedecin(Medecin medecin) {
     	this.selectedMedecin = medecin;
-    	lblNomMedecin.setText("Médecin : " + medecin.getNom());
+    	lblNomMedecin.setText("Mï¿½decin : " + medecin.getNom());
     	System.out.println(txtObservation.getText());
     	this.checkConsultation();
     }
