@@ -11,18 +11,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListeConsultationsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="765.0" style="-fx-background-color: #f1e3d3;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListeConsultationsController">
    <children>
-      <Pane layoutX="-1.0" prefHeight="119.0" prefWidth="777.0" style="-fx-background-color: #9a8c98;">
+      <Pane layoutX="-1.0" prefHeight="53.0" prefWidth="765.0" style="-fx-background-color: #9a8c98;">
          <children>
-            <Label layoutX="37.0" layoutY="33.0" text="Liste des consultations" textFill="#f0eded">
+            <Label layoutX="23.0" layoutY="10.0" text="Liste des consultations" textFill="#f0eded">
                <font>
-                  <Font size="36.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <TableView fx:id="tbView4" layoutX="22.0" layoutY="212.0" prefHeight="392.0" prefWidth="733.0">
+      <TableView fx:id="tbView4" layoutX="22.0" layoutY="161.0" prefHeight="392.0" prefWidth="733.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="77.33330917358398" text="ID" />
           <TableColumn fx:id="colPatient" prefWidth="162.6666488647461" text="Nom du patient" />
@@ -34,7 +34,7 @@
             <Insets left="10.0" />
          </padding>
       </TableView>
-      <HBox layoutX="16.0" layoutY="151.0" prefHeight="53.0" prefWidth="739.0">
+      <HBox layoutX="19.0" layoutY="84.0" prefHeight="53.0" prefWidth="739.0">
          <children>
             <Label text="Du">
                <HBox.margin>

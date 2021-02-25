@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PatientsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1164.0" style="-fx-background-color: #d8f3dc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PatientsController">
    <children>
-      <Pane prefHeight="91.0" prefWidth="1164.0" style="-fx-background-color: #2a9d8f;" stylesheets="@application.css">
+      <Pane prefHeight="63.0" prefWidth="1164.0" style="-fx-background-color: #2a9d8f;" stylesheets="@application.css">
          <children>
             <Label layoutX="24.0" layoutY="14.0" text="Gestion des patients" textFill="#fcfafa">
                <font>
@@ -67,17 +67,20 @@
                </VBox.margin>
             </Label>
             <TextField fx:id="txtTelephone" />
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="25.0" prefWidth="261.0" text="Ajouter">
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #1b998b;" text="Ajouter" textFill="#f7f0f0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #43aa8b;" text="Modifier" textFill="#eeebeb">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnEdit" mnemonicParsing="false" prefHeight="25.0" prefWidth="253.0" text="Modifier">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Supprimer">
+            <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" style="-fx-background-color: #218380;" text="Supprimer" textFill="#f3eded">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -105,9 +108,9 @@
             <TableColumn fx:id="colTelephone" minWidth="0.0" prefWidth="122.0001220703125" text="Téléphone" />
         </columns>
       </TableView>
-      <Label layoutX="333.0" layoutY="138.0" text="Liste des patients">
+      <Label layoutX="689.0" layoutY="126.0" text="Liste des patients">
          <font>
-            <Font name="System Bold Italic" size="14.0" />
+            <Font name="System Bold Italic" size="17.0" />
          </font>
       </Label>
    </children>

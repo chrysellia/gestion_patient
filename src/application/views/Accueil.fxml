@@ -11,14 +11,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="943.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AccueilController">
    <children>
-      <Pane prefHeight="173.0" prefWidth="980.0" style="-fx-background-color: #2D75E8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="141.0" prefWidth="943.0" style="-fx-background-color: #9381ff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="130.0" layoutY="44.0" text="Logiciel de Gestion de patient" textFill="WHITE">
+            <Label layoutX="72.0" layoutY="23.0" text="Logiciel de Gestion de patient" textFill="WHITE">
                <font>
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label layoutX="136.0" layoutY="105.0" text="Heal Patient" textFill="WHITE">
+            <Label layoutX="72.0" layoutY="84.0" text="Heal Patient" textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
@@ -37,22 +37,30 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnNewConsultation" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Nouvelle consulation">
-               
-            </Button>
-            <Button fx:id="btnPatients" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Gestion des patients" GridPane.columnIndex="1">
-               
-            </Button>
-            <Button fx:id="btnMedecins" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Gestion des médecins" GridPane.columnIndex="2">
-               
-            </Button>
-            <Button fx:id="btnMedicaments" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" stylesheets="application.css" text="Gestion des médicaments" GridPane.columnIndex="2" GridPane.rowIndex="1">
-              
-            </Button>
-            <Button fx:id="btnFactures" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" stylesheets="application.css" text="Liste des Factures" GridPane.rowIndex="1">
-       
-            </Button>
-            <Button fx:id="btnConsultations" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" stylesheets="application.css" text="Gestion des consultations" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="btnNewConsultation" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" style="-fx-background-color: #bb9457;" stylesheets="application.css" text="Nouvelle consultation" textFill="#fcf8f8">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="btnPatients" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" style="-fx-background-color: #2a9d8f;" stylesheets="application.css" text="Gestion des patients" textFill="#eeebeb" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="btnMedecins" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" style="-fx-background-color: #e29578;" stylesheets="application.css" text="Gestion des médecins" textFill="#f9f9f9" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="btnMedicaments" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="181.0" prefWidth="242.0" style="-fx-background-color: #f6bd60;" stylesheets="application.css" text="Gestion des médicaments" textFill="#fef6f6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="btnFactures" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" style="-fx-background-color: #284b63;" stylesheets="application.css" text="Liste des Factures" textFill="#f0eded" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="btnConsultations" mnemonicParsing="false" onAction="#handleClick" prefHeight="155.0" prefWidth="244.0" style="-fx-background-color: #9a8c98;" stylesheets="application.css" text="Gestion des consultations" textFill="#fef9f9" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
          </children>
       </GridPane>
    </children>
