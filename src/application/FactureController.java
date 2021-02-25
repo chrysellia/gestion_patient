@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
@@ -48,6 +49,7 @@ public class FactureController {
     @FXML private TableColumn<FactureContenu, String> colPrixUnitaire;
     @FXML private TableColumn<FactureContenu, String> colTotal;
     @FXML private TableColumn<FactureContenu, Integer> colIdFacture;
+    @FXML private TableColumn<FactureContenu, String> colPosologie;
     
     
     @FXML private Label textTotal;
@@ -57,6 +59,7 @@ public class FactureController {
     @FXML private Button btnAdd;
     @FXML private TextField fieldQuantite;
     @FXML private Label lblPatient;
+    @FXML private TextArea txtPosologie;
 
     @FXML private TableColumn<Medicament, String> colDesignationMedicament;
     @FXML private TableColumn<Medicament, String> colPrixMedicament;
@@ -66,7 +69,7 @@ public class FactureController {
     public void initialize() {
 		initTable();
 		
-		lblPatient.setText("Nom du patient : " + this.defaultConsultation.getPatient());
+		//lblPatient.setText("Nom du patient : " + this.defaultConsultation.getPatient());
 		
 		btnAdd.setOnAction(addHandler);
 		btnDelete.setDisable(true);
@@ -101,6 +104,7 @@ public class FactureController {
     	colQuantite.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("quantite"));
     	colPrixUnitaire.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("prixUnitaire"));
     	colTotal.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("sousTotal"));
+    	colPosologie.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("posologie"));
     	
     	// Initialisation table medicament
     	colDesignationMedicament.setCellValueFactory(new PropertyValueFactory<Medicament, String>("designation"));
@@ -142,15 +146,19 @@ public class FactureController {
 	}
 	
 	private void addItem() {
-		//Prendre les ï¿½lï¿½ments du tableau mï¿½dicament
+		//Prendre les éléments du tableau médicament
 		FactureContenu itemFacture = new FactureContenu();
 		String designation = this.selectedMedicament.getDesignation();
 		itemFacture.setDesignation(designation);
 		int prix = Integer.parseInt(this.selectedMedicament.getPrix());
+		int medicamentId = this.selectedMedicament.getId();
+		itemFacture.setMedicamentId(medicamentId);
 		int quantite = Integer.parseInt(fieldQuantite.getText());
 		itemFacture.setQuantite("" + quantite);
+		String posologie = txtPosologie.getText();
+		itemFacture.setPosologie("" + posologie);
 		
-		//Ajouter des ï¿½lï¿½ments dans le tableau facture
+		//Ajouter des éléments dans le tableau facture
 		itemFacture.setPrixUnitaire("" + prix);
 		int sousTotal = prix * quantite;
 		itemFacture.setSousTotal("" + sousTotal);
@@ -186,7 +194,7 @@ public class FactureController {
 	
 	
 	public void saveFacture() {
-		// 1- Insertion de la facture qui va contenir le dï¿½tail gï¿½nï¿½ral*
+		// 1- Insertion de la facture qui va contenir le détail général
 		int lastInsertId = 0;
 		try {
 			Database db = new Database();
@@ -210,15 +218,16 @@ public class FactureController {
 			System.out.println("error : " + er.getMessage());
 		}
 		
-		// 2- Insertion de chaque mï¿½dicament prescrit avec la designation, le prix, la quantite, sous-total et le prix unitaire
+		// 2- Insertion de chaque médicament prescrit avec la designation, le prix, la quantite, sous-total et le prix unitaire
 		try {
 			for (int i = 0; i < lignesFacture.size(); i++) {
 				FactureContenu item = lignesFacture.get(i);
 				
 				Database db = new Database();
-				String sql_contenu = "INSERT INTO facture_contenus (facture_id, designation, quantite, prixUnitaire, sousTotal) VALUES ('" + lastInsertId +"','" + item.getDesignation() +"', '" + item.getQuantite() +"','" + item.getSousTotal() + "', '" + item.getPrixUnitaire() + "')";
+				String sql_contenu = "INSERT INTO facture_contenus (facture_id, designation, medicamentId, quantite, prixUnitaire, sousTotal, posologie) VALUES ('" + lastInsertId +"','" + item.getDesignation() +"', '" + item.getMedicamentId() +"', '" + item.getQuantite() +"','" + item.getSousTotal() + "', '" + item.getPrixUnitaire() + "', '" + item.getPosologie()+"')";
 				db.connect();
 				ResultSet res = db.update(sql_contenu);
+				System.out.println(sql_contenu);
 			}
 			
 		} catch(Exception er) {
@@ -250,6 +259,7 @@ public class FactureController {
 			colPrixUnitaire.setText("");
 			colQuantite.setText("");
 			colTotal.setText("");
+			colPosologie.setText("");
 		} else if (action_type == "EDIT") {
 			btnAdd.setDisable(true);
 			btnDelete.setDisable(false);

@@ -3,9 +3,11 @@ package application.models;
 public class FactureContenu {
 	private Integer id;
 	private String designation;
+	private Integer medicamentId;
 	private String prixUnitaire;
 	private String quantite;
 	private String sousTotal;
+	private String posologie;
 	
 	public FactureContenu() {}
 	
@@ -49,10 +51,26 @@ public class FactureContenu {
 		this.sousTotal = sousTotal;
 	}
 
+	public String getPosologie() {
+		return posologie;
+	}
+
+	public void setPosologie(String posologie) {
+		this.posologie = posologie;
+	}
+
+	public Integer getMedicamentId() {
+		return medicamentId;
+	}
+
+	public void setMedicamentId(Integer medicamentId) {
+		this.medicamentId = medicamentId;
+	}
+
 	@Override
 	public String toString() {
 		return "FactureContenu [id=" + id + ", designation=" + designation + ", prixUnitaire=" + prixUnitaire
-				+ ", quantite=" + quantite + ", sous_total=" + sousTotal + "]";
+				+ ", quantite=" + quantite + ", sous_total=" + sousTotal + ", posologie=" + posologie+", medicamentId=" + medicamentId+"]";
 	}
 	
 	

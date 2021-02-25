@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FactureController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FactureController">
    <children>
-      <TableView fx:id="tbFacture" layoutX="349.0" layoutY="158.0" prefHeight="279.0" prefWidth="491.0">
+      <TableView fx:id="tbFacture" layoutX="349.0" layoutY="158.0" prefHeight="279.0" prefWidth="620.0">
         <columns>
           <TableColumn fx:id="colDesignation" prefWidth="124.66665649414062" text="Désignation" />
           <TableColumn fx:id="colQuantite" prefWidth="114.66671752929688" text="Quantité" />
-            <TableColumn fx:id="colPrixUnitaire" prefWidth="127.99993896484375" text="Prix unitaire" />
-            <TableColumn fx:id="colTotal" prefWidth="113.3333740234375" text="Total" />
+            <TableColumn fx:id="colPosologie" prefWidth="127.99993896484375" text="Posologie" />
+            <TableColumn fx:id="colPrixUnitaire" prefWidth="113.3333740234375" text="Prix Unitaire" />
+            <TableColumn fx:id="colTotal" prefWidth="134.6666259765625" text="Total" />
         </columns>
       </TableView>
-      <Button fx:id="btnValidate" layoutX="719.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Valider">
+      <Button fx:id="btnValidate" layoutX="849.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Valider">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="233.0" layoutY="412.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Supprimer">
+      <Button fx:id="btnDelete" layoutX="234.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Supprimer">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -40,7 +41,7 @@
          </font>
       </Label>
       <TextField fx:id="fieldQuantite" alignment="CENTER" layoutX="113.0" layoutY="373.0" prefHeight="25.0" prefWidth="91.0" />
-      <Label layoutX="724.0" layoutY="447.0" prefHeight="25.0" prefWidth="63.0" text="TOTAL =">
+      <Label layoutX="817.0" layoutY="447.0" prefHeight="25.0" prefWidth="63.0" text="TOTAL =">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -61,7 +62,7 @@
           <TableColumn fx:id="colPrixMedicament" prefWidth="134.66661071777344" text="Prix" />
         </columns>
       </TableView>
-      <Label fx:id="textTotal" layoutX="788.0" layoutY="451.0" prefHeight="17.0" prefWidth="50.0" text="0 Ar" textAlignment="RIGHT" />
+      <Label fx:id="textTotal" layoutX="919.0" layoutY="451.0" prefHeight="17.0" prefWidth="50.0" text="0 Ar" textAlignment="RIGHT" />
       <Label fx:id="lblPatient" layoutX="37.0" layoutY="74.0" text="Nom du patient :">
          <font>
             <Font size="28.0" />
@@ -77,6 +78,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="113.0" layoutY="412.0" prefHeight="25.0" prefWidth="100.0" />
+      <TextArea fx:id="txtPosologie" layoutX="37.0" layoutY="445.0" prefHeight="124.0" prefWidth="297.0" />
    </children>
 </AnchorPane>

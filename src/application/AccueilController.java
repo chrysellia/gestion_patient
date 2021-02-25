@@ -1,5 +1,6 @@
 package application;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +20,7 @@ public class AccueilController {
 	@FXML private Button btnFactures;
 	
 	@FXML
-	void handleClick(javafx.event.ActionEvent mouseEvent) {
+	void handleClick(ActionEvent mouseEvent) {
 		if (mouseEvent.getSource() == btnNewConsultation) {
 			loadStage("/application/views/NewConsultation.fxml");
 		} else if(mouseEvent.getSource() == btnPatients) {
