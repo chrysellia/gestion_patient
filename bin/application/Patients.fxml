@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PatientsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PatientsController">
    <children>
-      <Pane prefHeight="91.0" prefWidth="1496.0" style="-fx-background-color: #2a9d8f;" stylesheets="@application.css">
+      <Pane prefHeight="91.0" prefWidth="1164.0" style="-fx-background-color: #2a9d8f;" stylesheets="@application.css">
          <children>
-            <Label layoutX="23.0" layoutY="14.0" text="Gestion des patients" textFill="#fcfafa">
+            <Label layoutX="24.0" layoutY="14.0" text="Gestion des patients" textFill="#fcfafa">
                <font>
-                  <Font size="36.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
          </children>
@@ -39,11 +40,17 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="txtPrenom">
+            <TextField fx:id="txtPrenom" prefHeight="25.0" prefWidth="219.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
+            <Label text="Date de naissance">
+               <VBox.margin>
+                  <Insets right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <DatePicker prefHeight="25.0" prefWidth="231.0" />
             <Label text="Adresse">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -88,14 +95,14 @@
             <Insets left="25.0" />
          </padding>
       </Label>
-      <TableView fx:id="tbView" layoutX="333.0" layoutY="177.0" prefHeight="397.0" prefWidth="659.0">
+      <TableView fx:id="tbView" layoutX="333.0" layoutY="177.0" prefHeight="397.0" prefWidth="814.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="38.666656494140625" text="ID" />
-          <TableColumn fx:id="colNom" prefWidth="156.0" text="Nom" />
-            <TableColumn fx:id="colPrenom" prefWidth="83.3333740234375" text="Prénom" />
-            <TableColumn fx:id="colDateNaissance" prefWidth="132.0" text="Date de naissance" />
-            <TableColumn fx:id="colAdresse" minWidth="2.6666259765625" prefWidth="108.00006103515625" text="Adresse" />
-            <TableColumn fx:id="colTelephone" minWidth="0.0" prefWidth="109.9998779296875" text="Téléphone" />
+          <TableColumn fx:id="colNom" prefWidth="176.00006103515625" text="Nom" />
+            <TableColumn fx:id="colPrenom" prefWidth="161.33331298828125" text="Prénom" />
+            <TableColumn fx:id="colDateNaissance" prefWidth="188.00006103515625" text="Date de naissance" />
+            <TableColumn fx:id="colAdresse" minWidth="2.6666259765625" prefWidth="130.0" text="Adresse" />
+            <TableColumn fx:id="colTelephone" minWidth="0.0" prefWidth="122.0001220703125" text="Téléphone" />
         </columns>
       </TableView>
       <Label layoutX="333.0" layoutY="138.0" text="Liste des patients">
