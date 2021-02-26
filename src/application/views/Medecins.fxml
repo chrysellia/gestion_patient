@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="1097.0" style="-fx-background-color: #ffdccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MedecinsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="1003.0" style="-fx-background-color: #ffdccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MedecinsController">
    <children>
-      <Pane layoutX="-29.0" prefHeight="73.0" prefWidth="1126.0" style="-fx-background-color: #e29578;">
+      <Pane layoutX="-29.0" prefHeight="73.0" prefWidth="1033.0" style="-fx-background-color: #e29578;">
          <children>
             <Label layoutX="51.0" layoutY="18.0" text="Gestion des médecins" textFill="#f7f2f2">
                <font>
@@ -54,16 +54,6 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Etat">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="txtEtat">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </TextField>
             <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="25.0" prefWidth="375.0" style="-fx-background-color: #ed6a5a;" text="Ajouter" textFill="#f3f0f0">
                <VBox.margin>
                   <Insets top="20.0" />
@@ -95,14 +85,13 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tbView2" layoutX="419.0" layoutY="181.0" prefHeight="333.0" prefWidth="647.0">
+      <TableView fx:id="tblMedecin" layoutX="419.0" layoutY="181.0" prefHeight="333.0" prefWidth="555.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="42.66668701171875" text="ID" />
           <TableColumn fx:id="colNom" prefWidth="108.66668701171875" text="Nom" />
             <TableColumn fx:id="colTelephone" prefWidth="108.0" text="Téléphone" />
             <TableColumn fx:id="colCategorie" prefWidth="143.33331298828125" text="Catégorie" />
-            <TableColumn fx:id="colConsultation" prefWidth="151.33331298828125" text="Nombre de consultations" />
-            <TableColumn fx:id="colEtat" prefWidth="87.33333333333337" text="Etat" />
+            <TableColumn fx:id="colTotalConsultation" prefWidth="151.33331298828125" text="Total de consultation" />
         </columns>
       </TableView>
       <Label layoutX="653.0" layoutY="121.0" text="Liste des médecins">

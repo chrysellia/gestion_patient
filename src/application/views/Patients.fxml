@@ -50,7 +50,7 @@
                   <Insets right="10.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <DatePicker prefHeight="25.0" prefWidth="231.0" />
+            <DatePicker fx:id="dpDateNaissance" prefHeight="25.0" prefWidth="231.0" />
             <Label text="Adresse">
                <VBox.margin>
                   <Insets top="5.0" />

@@ -14,7 +14,7 @@ public class Main extends Application {
 		try {
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/application/views/Accueil.fxml"));
 			Scene scene = new Scene(root, 800, 600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/application/views/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Heal Patient");
 			primaryStage.show();

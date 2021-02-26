@@ -1,14 +1,17 @@
 package application;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import application.models.Database;
@@ -26,7 +29,7 @@ public class PatientsController {
 
 	@FXML private TextField txtNom;
     @FXML private TextField txtPrenom;
-    @FXML private TextField txtDateNaissance;
+    @FXML private DatePicker dpDateNaissance;
     @FXML private TextField txtAdresse;
     @FXML private TextField txtTelephone;
     @FXML private TextField txtMedecin;
@@ -74,6 +77,7 @@ public class PatientsController {
 		colId.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("id"));
 		colNom.setCellValueFactory(new PropertyValueFactory<Patient, String>("nom"));
 		colPrenom.setCellValueFactory(new PropertyValueFactory<Patient, String>("prenom"));
+		colDateNaissance.setCellValueFactory(new PropertyValueFactory<Patient, Date>("dateNaissance"));
 		colAdresse.setCellValueFactory(new PropertyValueFactory<Patient, String>("adresse"));
 		colTelephone.setCellValueFactory(new PropertyValueFactory<Patient, String>("telephone"));
 		// colDateNaissance.setCellValueFactory(cellData -> cellData.getValue().getDateNaissance());
@@ -87,6 +91,7 @@ public class PatientsController {
 				int id  = rs.getInt("id");
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
+				String dateNaissance = rs.getString("dateNaissance");
 				String adresse = rs.getString("adresse");
 				String telephone = rs.getString("telephone");
 				
@@ -94,6 +99,7 @@ public class PatientsController {
 				patient.setId(id);
 				patient.setNom(nom);
 				patient.setPrenom(prenom);
+				patient.setDateNaissance(dateNaissance);
 				patient.setAdresse(adresse);
 				patient.setTelephone(telephone);
 				
@@ -107,14 +113,20 @@ public class PatientsController {
 		tbView.getItems().setAll(listPatients);
 	}
     
+    private String handleDate(DatePicker target) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	return target.getValue().format(formatter);
+    }
+    
     public void insertPatient() {
 		Database db = new Database();
 		db.connect();
 		String nomValue = txtNom.getText();
 		String prenomValue = txtPrenom.getText();
+		String strDateNaissance = this.handleDate(dpDateNaissance);
 		String telephoneValue = txtTelephone.getText();
 		String adresseValue = txtAdresse.getText();
-		String sql = "INSERT INTO patients (nom, prenom, adresse, telephone) VALUES ('" + nomValue + "', '" + prenomValue + "','" + adresseValue +"', '" + telephoneValue +"')";
+		String sql = "INSERT INTO patients (nom, prenom, dateNaissance, adresse, telephone) VALUES ('" + nomValue + "', '" + prenomValue + "', '" + strDateNaissance + "','" + adresseValue +"', '" + telephoneValue +"')";
 		db.update(sql);
 		
 		this.initTable();
@@ -126,10 +138,11 @@ public class PatientsController {
 		
 		String nomValue = txtNom.getText();
 		String prenomValue = txtPrenom.getText();
+		String strDateNaissance = this.handleDate(dpDateNaissance);
 		String telephoneValue = txtTelephone.getText();
 		String adresseValue = txtAdresse.getText();
 		
-		String sql = "UPDATE patients SET nom='" + nomValue + "', prenom='" + prenomValue + "', adresse='" + adresseValue +"', telephone='" + telephoneValue +"' WHERE id = " + id + " LIMIT 1";
+		String sql = "UPDATE patients SET nom = '" + nomValue + "', prenom = '" + prenomValue + "', dateNaissance = '" + strDateNaissance + "', adresse = '" + adresseValue +"', telephone = '" + telephoneValue +"' WHERE id = " + id + " LIMIT 1";
 		db.update(sql);
 		
 		this.action.setType("ADD");
@@ -154,6 +167,10 @@ public class PatientsController {
     private void fillEdit(Patient patient) {
 		txtNom.setText(patient.getNom());
 		txtPrenom.setText(patient.getPrenom());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localdate = LocalDate.parse(patient.getDateNaissance(), formatter);
+		
+		dpDateNaissance.setValue(localdate);
 		txtAdresse.setText(patient.getAdresse());
 		txtTelephone.setText(patient.getTelephone());
 
@@ -174,6 +191,8 @@ public class PatientsController {
 			
 			txtNom.setText("");
 			txtPrenom.setText("");
+			
+			dpDateNaissance.setValue(null);
 			txtAdresse.setText("");
 			txtTelephone.setText("");
 		} else if (action_type == "EDIT") {

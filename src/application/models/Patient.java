@@ -6,17 +6,17 @@ public class Patient {
 	private int id;
 	private String nom;
 	private String prenom;
-	private Date date_naissance;
+	private String dateNaissance;
 	private String adresse;
 	private String telephone;
 	
 	public Patient() {}
 	
-	public Patient(int id, String nom, String prenom, Date date_naissance, String adresse, String telephone,
+	public Patient(int id, String nom, String prenom, String dateNaissance, String adresse, String telephone,
 			int medecin_id) {
 		this.nom = nom;
 		this.prenom = prenom;
-		this.date_naissance = date_naissance;
+		this.dateNaissance = dateNaissance;
 		this.adresse = adresse;
 		this.telephone = telephone;
 	}
@@ -45,12 +45,12 @@ public class Patient {
 		this.prenom = prenom;
 	}
 
-	public Date getDateNaissance() {
-		return date_naissance;
+	public String getDateNaissance() {
+		return dateNaissance;
 	}
 
-	public void setDateNaissance(Date date_naissance) {
-		this.date_naissance = date_naissance;
+	public void setDateNaissance(String dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 
 	public String getAdresse() {

@@ -5,17 +5,17 @@ public class Medecin {
 	private String nom;
 	private String telephone;
 	private String categorie;
-	private String etat;
+	private String totalConsultation;
 
 	public Medecin() {}
 	
-	public Medecin(int id, String nom, String telephone, String categorie, String etat) {
+	public Medecin(int id, String nom, String telephone, String categorie, String totalConsultation) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.telephone = telephone;
 		this.categorie = categorie;
-		this.etat = etat;
+		this.totalConsultation = totalConsultation;
 	}
 
 	public Integer getId() {
@@ -50,11 +50,11 @@ public class Medecin {
 		this.categorie = categorie;
 	}
 
-	public String getEtat() {
-		return etat;
+	public String getTotalConsultation() {
+		return totalConsultation;
 	}
 
-	public void setEtat(String etat) {
-		this.etat = etat;
+	public void setTotalConsultation(String totalConsultation) {
+		this.totalConsultation = totalConsultation;
 	}
 }

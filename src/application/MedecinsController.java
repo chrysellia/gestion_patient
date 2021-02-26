@@ -30,38 +30,28 @@ public class MedecinsController {
 	private Action action;
 	private Medecin editMedecin = null;
 	
-	@FXML
-	private TextField txtNom;
-	@FXML
-	private TextField txtTelephone;
-	@FXML
-	private TextField txtCategorie;
-	@FXML
-	private TextField txtEtat;
-	@FXML
-	private Button btnAdd;
-	@FXML
-	private Button btnEdit;
-	@FXML
-	private Button btnDelete;
-	@FXML
-	private TableView<Medecin> tbView2;
-	@FXML
-	private TableColumn<Medecin, Integer> colId;
-	@FXML
-	private TableColumn<Medecin, String> colNom;
-	@FXML
-	private TableColumn<Medecin, String> colTelephone;
-	@FXML
-	private TableColumn<Medecin, String> colCategorie;
-	@FXML
-	private TableColumn<Medecin, String> colEtat;
-
+	@FXML private TextField txtNom;
+	@FXML private TextField txtTelephone;
+	@FXML private TextField txtCategorie;
+	
+	@FXML private Button btnAdd;
+	@FXML private Button btnEdit;
+	@FXML private Button btnDelete;
+	
+	@FXML private TableView<Medecin> tblMedecin;
+	@FXML private TableColumn<Medecin, Integer> colId;
+	@FXML private TableColumn<Medecin, String> colNom;
+	@FXML private TableColumn<Medecin, String> colTelephone;
+	@FXML private TableColumn<Medecin, String> colCategorie;
+	@FXML private TableColumn<Medecin, String> colTotalConsultation;
 	
 	public ResultSet getAllMedecin() {
     	Database db = new Database();
     	db.connect();
-    	ResultSet rs = db.execute("SELECT * FROM medecins");
+    	ResultSet rs = db.execute("SELECT "
+    			+ "*, "
+    			+ "(SELECT COUNT(consultations.id) FROM consultations WHERE consultations.medecin_id = medecins.id LIMIT 1) AS totalConsultation "
+    			+ "FROM `medecins`");
 		return rs;
     }
 	
@@ -74,7 +64,7 @@ public class MedecinsController {
 		
 		initTable();
 		
-		tbView2.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
+		tblMedecin.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
 		    if (newSelection != null) {
 		        fillEdit(newSelection);
 		    }
@@ -86,7 +76,8 @@ public class MedecinsController {
 		colNom.setCellValueFactory(new PropertyValueFactory<Medecin, String>("nom"));
 		colCategorie.setCellValueFactory(new PropertyValueFactory<Medecin, String>("categorie"));
 		colTelephone.setCellValueFactory(new PropertyValueFactory<Medecin, String>("telephone"));
-		colEtat.setCellValueFactory(new PropertyValueFactory<Medecin, String>("etat"));
+		colTelephone.setCellValueFactory(new PropertyValueFactory<Medecin, String>("telephone"));
+		colTotalConsultation.setCellValueFactory(new PropertyValueFactory<Medecin, String>("totalConsultation"));
 		
 		listMedecins = new ArrayList<Medecin>();
 		
@@ -98,14 +89,14 @@ public class MedecinsController {
 				String nom = rs.getString("nom");
 				String categorie = rs.getString("categorie");
 				String telephone = rs.getString("telephone");
-				String etat = rs.getString("etat");
+				String totalConsultation = rs.getString("totalConsultation");
 				
 				Medecin medecin = new Medecin();
 				medecin.setId(id);
 				medecin.setNom(nom);
 				medecin.setCategorie(categorie);
 				medecin.setTelephone(telephone);
-				medecin.setEtat(etat);
+				medecin.setTotalConsultation(totalConsultation);
 				
 				listMedecins.add(medecin);
 			}
@@ -114,7 +105,7 @@ public class MedecinsController {
 			e.printStackTrace();
 		}
 		
-		tbView2.getItems().setAll(listMedecins);
+		tblMedecin.getItems().setAll(listMedecins);
 	}
 	
 	 public void insertMedecin() {
@@ -123,11 +114,11 @@ public class MedecinsController {
 			String nomValue = txtNom.getText();
 			String telephoneValue = txtTelephone.getText();
 			String categorieValue = txtCategorie.getText();
-			String etatValue = txtEtat.getText();
-			String sql = "INSERT INTO medecins (nom, categorie, telephone, etat) VALUES ('" + nomValue + "','" + categorieValue +"', '" + telephoneValue +"', '"+ etatValue+"')";
+			String sql = "INSERT INTO medecins (nom, categorie, telephone) VALUES ('" + nomValue + "','" + categorieValue +"', '" + telephoneValue +"')";
 			db.update(sql);
 			
 			this.initTable();
+			this.refreshAction();
 		}
 	    
 	    public void updateMedecin(int id) {
@@ -137,9 +128,8 @@ public class MedecinsController {
 			String nomValue = txtNom.getText();
 			String telephoneValue = txtTelephone.getText();
 			String categorieValue = txtCategorie.getText();
-			String etatValue = txtEtat.getText();
 			
-			String sql = "UPDATE medecins SET nom='" + nomValue + "', categorie='" + categorieValue +"', telephone='" + telephoneValue +"', etat='" + etatValue +"' WHERE id = " + id + " LIMIT 1";
+			String sql = "UPDATE medecins SET nom='" + nomValue + "', categorie='" + categorieValue +"', telephone='" + telephoneValue +"' WHERE id = " + id + " LIMIT 1";
 			db.update(sql);
 			
 			this.action.setType("ADD");
@@ -165,8 +155,6 @@ public class MedecinsController {
 			txtNom.setText(medecin.getNom());
 			txtCategorie.setText(medecin.getCategorie());
 			txtTelephone.setText(medecin.getTelephone());
-			txtEtat.setText(medecin.getEtat());
-
 			
 			this.action.setType("EDIT");
 			this.refreshAction();
@@ -185,7 +173,6 @@ public class MedecinsController {
 				txtNom.setText("");
 				txtCategorie.setText("");
 				txtTelephone.setText("");
-				txtEtat.setText("");
 			} else if (action_type == "EDIT") {
 				btnAdd.setDisable(true);
 				btnEdit.setDisable(false);

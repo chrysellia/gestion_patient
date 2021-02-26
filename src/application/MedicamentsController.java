@@ -99,6 +99,7 @@ public class MedicamentsController {
         db.update(sql);
         
         this.initTable();
+        this.refreshAction();
     }
 	    
     public void updateMedicament(int id) {

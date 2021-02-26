@@ -8,19 +8,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListeFacturesController">
    <children>
-      <Pane layoutX="-7.0" prefHeight="79.0" prefWidth="616.0" style="-fx-background-color: #284b63;">
+      <Pane layoutX="-7.0" prefHeight="57.0" prefWidth="616.0" style="-fx-background-color: #284b63;">
          <children>
-            <Label layoutX="36.0" layoutY="19.0" text="Liste des factures" textFill="#f9f1f1">
+            <Label layoutX="35.0" layoutY="11.0" text="Liste des factures" textFill="#f9f1f1">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btnPrintFacture" layoutX="455.0" layoutY="109.0" mnemonicParsing="false" onAction="#handeActionButton" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: #284b63;" text="Imprimer" textFill="#f3f1f1" />
+      <Button fx:id="btnPrintFacture" layoutX="440.0" layoutY="106.0" mnemonicParsing="false" onAction="#handeActionButton" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: #284b63;" text="Imprimer" textFill="#f3f1f1" />
       <TableView fx:id="tbListeFacture" layoutX="21.0" layoutY="157.0" prefHeight="357.0" prefWidth="549.0">
         <columns>
           <TableColumn fx:id="factureId" prefWidth="75.0" text="ID" />

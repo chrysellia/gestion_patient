@@ -169,9 +169,7 @@ public class ListeConsultationsController {
         try {
         	String pdf_name = this.selectedConsultation.getId() + "_facture" +  this.selectedConsultation.getPatient() + ".pdf";
         	//File file = new File(pdf_name);
-			
-			
-	        
+
 	        //Retrieving the pages of the document 
 	        PDPage page = document.getPage(0);
 	        PDPageContentStream contentStream = new PDPageContentStream(document, page);
@@ -186,9 +184,15 @@ public class ListeConsultationsController {
 	        contentStream.newLineAtOffset(25, 725);
 	        
 	        String text = "FACTURE DU CLIENT";
+	        contentStream.newLine(); 
+	        String nom_medecin = "Nom du médecin";
+	        contentStream.newLine(); 
+	        String nom_patient = "Nom du patient";
 
 	        //Adding text in the form of string 
 	        contentStream.showText(text);  
+	        contentStream.showText(nom_medecin);  
+	        contentStream.showText(nom_patient);  
 	        
 	        //Ending the content stream
 	        contentStream.endText();

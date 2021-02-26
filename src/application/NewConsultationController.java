@@ -33,6 +33,7 @@ public class NewConsultationController {
 	private ArrayList<Patient> listPatients = new ArrayList<Patient>();
 	private ArrayList<Medecin> listMedecins = new ArrayList<Medecin>();
 	private ArrayList<Consultation> listConsultations = new ArrayList<Consultation>();
+	private Action action;
     
     private Patient selectedPatient;
 	private Medecin selectedMedecin;
@@ -63,14 +64,14 @@ public class NewConsultationController {
     public ResultSet getAllPatients() {
     	Database db = new Database();
     	db.connect();
-    	ResultSet rs = db.execute("SELECT * from patients");
+    	ResultSet rs = db.execute("SELECT * from `patients` LEFT JOIN consultations ON consultations.patient_id = patients.id WHERE consultations.id IS NULL");
     	return rs;
     }
     
     public ResultSet getAllMedecins() {
     	Database db = new Database();
     	db.connect();
-    	ResultSet rs1 = db.execute("SELECT * from medecins");
+    	ResultSet rs1 = db.execute("SELECT * FROM `medecins` LEFT JOIN consultations ON consultations.medecin_id = medecins.id WHERE consultations.id IS NULL");
     	return rs1;
     }
     
@@ -217,7 +218,7 @@ public class NewConsultationController {
     
     private void selectMedecin(Medecin medecin) {
     	this.selectedMedecin = medecin;
-    	lblNomMedecin.setText("Mï¿½decin : " + medecin.getNom());
+    	lblNomMedecin.setText("Médecin : " + medecin.getNom());
     	System.out.println(txtObservation.getText());
     	this.checkConsultation();
     }
@@ -231,7 +232,8 @@ public class NewConsultationController {
 		
 		db.update(sql_consultation);
 		
-		this.initTableConsultation();
+		this.initTable();
+    	this.refreshAction();
 	}
     
     private void checkConsultation() {
@@ -241,4 +243,32 @@ public class NewConsultationController {
     		this.btnEnregistrer.setDisable(false);
     	}
     }
+    
+    private void refreshAction() {
+		String action_type = this.action.getType();
+		
+		if (action_type == "ADD") {
+			btnEnregistrer.setDisable(false);
+			
+			lblNomPatient.setText("");
+			lblNomMedecin.setText("");
+			txtObservation.setText("");
+		}
+	}
+    
+    class Action {
+		private String type;
+		
+		public Action(String type) {
+			this.type = type;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+	}
 }
