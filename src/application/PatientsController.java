@@ -32,8 +32,6 @@ public class PatientsController {
     @FXML private DatePicker dpDateNaissance;
     @FXML private TextField txtAdresse;
     @FXML private TextField txtTelephone;
-    @FXML private TextField txtMedecin;
-    @FXML private TextField txtMaladie;
 
     @FXML private Button btnAdd;
     @FXML private Button btnEdit;
@@ -58,9 +56,13 @@ public class PatientsController {
     }
     
     public void initialize() {
+    	this.checkPatient();
 		action = new Action("ADD");
 		
 		btnAdd.setOnAction(addHandler);
+		btnAdd.setDisable(true);
+		btnDelete.setDisable(true);
+		btnEdit.setDisable(true);
 		btnEdit.setOnAction(updateHandler);
 		btnDelete.setOnAction(deleteHandler);
 		
@@ -71,6 +73,25 @@ public class PatientsController {
 		        fillEdit(newSelection);
 		    }
 		}); 
+		
+		txtNom.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkPatient();
+		});
+		txtPrenom.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkPatient();
+		});
+		dpDateNaissance.valueProperty().addListener((observable, oldDate, newDate) -> {
+		    this.checkPatient();
+		});
+		txtAdresse.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkPatient();
+		});
+		txtTelephone.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkPatient();
+		});
+		txtTelephone.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkPatient();
+		});
 	}
     
     private void initTable() {
@@ -104,6 +125,7 @@ public class PatientsController {
 				patient.setTelephone(telephone);
 				
 				listPatients.add(patient);
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -130,7 +152,27 @@ public class PatientsController {
 		db.update(sql);
 		
 		this.initTable();
+		
+		this.action.setType("ADD");
+		this.refreshAction();
 	}
+    
+    private boolean checkEmpty(DatePicker field) {
+    	return field.getValue() == null || field.getValue().toString().trim().isEmpty();
+    }
+    
+    private boolean checkEmpty(TextField field) {
+    	return field.getText() == null || field.getText().trim().isEmpty();
+    }
+    
+    private void checkPatient() {
+    	//  || this.handleDate(dpDateNaissance) == null || this.txtTelephone == null || this.txtAdresse == null || this.txtTelephone == null
+    	if (this.checkEmpty(this.txtNom) || this.checkEmpty(this.txtPrenom) || this.checkEmpty(this.dpDateNaissance) || this.checkEmpty(this.txtAdresse) || this.checkEmpty(this.txtTelephone)) {
+			btnAdd.setDisable(true);
+		} else {
+			btnAdd.setDisable(false);
+		}
+    }
     
     public void updatePatient(int id) {
 		Database db = new Database();

@@ -59,6 +59,7 @@ public class MedecinsController {
 		action = new Action("ADD");
 		
 		btnAdd.setOnAction(addHandler);
+		btnAdd.setDisable(true);
 		btnEdit.setOnAction(updateHandler);
 		btnDelete.setOnAction(deleteHandler);
 		
@@ -69,6 +70,16 @@ public class MedecinsController {
 		        fillEdit(newSelection);
 		    }
 		}); 
+		
+		txtNom.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkMedecin();
+		});
+		txtCategorie.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkMedecin();
+		});
+		txtTelephone.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkMedecin();
+		});
 	}
 	
 	private void initTable() {
@@ -119,66 +130,78 @@ public class MedecinsController {
 			
 			this.initTable();
 			this.refreshAction();
+	}
+	 
+	private boolean checkEmpty(TextField field) {
+		return field.getText() == null || field.getText().trim().isEmpty();
+	}
+	 
+	private void checkMedecin() {
+		if (this.checkEmpty(this.txtNom) || this.checkEmpty(this.txtTelephone) || this.checkEmpty(this.txtCategorie)){
+			btnAdd.setDisable(true);
+		} else {
+			btnAdd.setDisable(false);
 		}
+	}
 	    
-	    public void updateMedecin(int id) {
-			Database db = new Database();
-			db.connect();
+    public void updateMedecin(int id) {
+		Database db = new Database();
+		db.connect();
+		
+		String nomValue = txtNom.getText();
+		String telephoneValue = txtTelephone.getText();
+		String categorieValue = txtCategorie.getText();
+		
+		String sql = "UPDATE medecins SET nom='" + nomValue + "', categorie='" + categorieValue +"', telephone='" + telephoneValue +"' WHERE id = " + id + " LIMIT 1";
+		db.update(sql);
+		
+		this.action.setType("ADD");
+		
+		this.initTable();
+		this.refreshAction();
+	}
+    
+    public void deleteMedecin(int id) {
+		Database db = new Database();
+		db.connect();
+		
+		String sql = "DELETE FROM medecins WHERE id = " + id + " LIMIT 1";
+		db.update(sql);
+		
+		this.action.setType("ADD");
+		
+		this.initTable();
+		this.refreshAction();
+	}
+    
+    private void fillEdit(Medecin medecin) {
+		txtNom.setText(medecin.getNom());
+		txtCategorie.setText(medecin.getCategorie());
+		txtTelephone.setText(medecin.getTelephone());
+		
+		this.action.setType("EDIT");
+		this.refreshAction();
+		
+		this.editMedecin = medecin;
+	}
+    
+    private void refreshAction() {
+		String action_type = this.action.getType();
+		
+		if (action_type == "ADD") {
+			btnAdd.setDisable(false);
+			btnEdit.setDisable(true);
+			btnDelete.setDisable(true);
 			
-			String nomValue = txtNom.getText();
-			String telephoneValue = txtTelephone.getText();
-			String categorieValue = txtCategorie.getText();
-			
-			String sql = "UPDATE medecins SET nom='" + nomValue + "', categorie='" + categorieValue +"', telephone='" + telephoneValue +"' WHERE id = " + id + " LIMIT 1";
-			db.update(sql);
-			
-			this.action.setType("ADD");
-			
-			this.initTable();
-			this.refreshAction();
+			txtNom.setText("");
+			txtCategorie.setText("");
+			txtTelephone.setText("");
+		} else if (action_type == "EDIT") {
+			btnAdd.setDisable(true);
+			btnEdit.setDisable(false);
+			btnDelete.setDisable(false);
 		}
-	    
-	    public void deleteMedecin(int id) {
-			Database db = new Database();
-			db.connect();
-			
-			String sql = "DELETE FROM medecins WHERE id = " + id + " LIMIT 1";
-			db.update(sql);
-			
-			this.action.setType("ADD");
-			
-			this.initTable();
-			this.refreshAction();
-		}
-	    
-	    private void fillEdit(Medecin medecin) {
-			txtNom.setText(medecin.getNom());
-			txtCategorie.setText(medecin.getCategorie());
-			txtTelephone.setText(medecin.getTelephone());
-			
-			this.action.setType("EDIT");
-			this.refreshAction();
-			
-			this.editMedecin = medecin;
-		}
-	    
-	    private void refreshAction() {
-			String action_type = this.action.getType();
-			
-			if (action_type == "ADD") {
-				btnAdd.setDisable(false);
-				btnEdit.setDisable(true);
-				btnDelete.setDisable(true);
-				
-				txtNom.setText("");
-				txtCategorie.setText("");
-				txtTelephone.setText("");
-			} else if (action_type == "EDIT") {
-				btnAdd.setDisable(true);
-				btnEdit.setDisable(false);
-				btnDelete.setDisable(false);
-			}
-		}
+	}
 	    
     EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
 			@Override

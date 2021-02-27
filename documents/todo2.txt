@@ -1,0 +1,8 @@
+On ne peut ajouter que deux médicaments pour un patient dans la fcature
+Erreur dans l'ajout de patient, medecin et médicament dans la facture
+Enlever les patients et médecins après avoir été sélectionnés dans nouvelle consultation
+Ils ne sont pas rafraîchis
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
+	at application.NewConsultationController.checkConsultation(NewConsultationController.java:240)
+	at application.NewConsultationController.selectPatient(NewConsultationController.java:216)
+	at application.NewConsultationController.lambda$0(NewConsultationController.java:99)

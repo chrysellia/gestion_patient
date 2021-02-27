@@ -75,7 +75,7 @@
          </font>
       </Label>
       <TextArea fx:id="txtPosologie" layoutX="29.0" layoutY="493.0" prefHeight="124.0" prefWidth="297.0" />
-      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="102.0" prefWidth="991.0" style="-fx-background-color: #6f1d1b;">
+      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="102.0" prefWidth="991.0" style="-fx-background-color: #6f1d1b;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="27.0" layoutY="25.0" text="Création d'une facture (ordonnance)" textFill="#f9f9f9">
                <font>

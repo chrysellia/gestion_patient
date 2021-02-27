@@ -47,6 +47,7 @@ public class MedicamentsController {
 		action = new Action("ADD");
 		
 		btnAdd.setOnAction(addHandler);
+		btnAdd.setDisable(true);
 		btnEdit.setOnAction(updateHandler);
 		btnDelete.setOnAction(deleteHandler);
 		
@@ -57,6 +58,13 @@ public class MedicamentsController {
 		        fillEdit(newSelection);
 		    }
 		}); 
+		
+		txtDesignation.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkMedicament();
+		});
+		txtPrix.textProperty().addListener((observable, oldValue, newValue) -> {
+		    this.checkMedicament();
+		});
 	}
 	
 	private void initTable() {
@@ -100,6 +108,18 @@ public class MedicamentsController {
         
         this.initTable();
         this.refreshAction();
+    }
+    
+    private boolean checkEmpty(TextField field) {
+    	return field.getText() == null || field.getText().trim().isEmpty();
+    }
+    
+    private void checkMedicament() {
+    	if (this.checkEmpty(this.txtDesignation) || this.checkEmpty(this.txtPrix)){
+			btnAdd.setDisable(true);
+		} else {
+			btnAdd.setDisable(false);
+		}
     }
 	    
     public void updateMedicament(int id) {

@@ -15,12 +15,12 @@
          <children>
             <Label layoutX="23.0" layoutY="9.0" text="Nouvelle consultation" textFill="WHITE">
                <font>
-                  <Font name = "System bold" size="24.0" />
+                  <Font name="System bold" size="24.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Label layoutX="48.0" layoutY="74.0" text="Création d'un nouvelle consultation">
+      <Label layoutX="48.0" layoutY="74.0" text="Création d'une nouvelle consultation">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>

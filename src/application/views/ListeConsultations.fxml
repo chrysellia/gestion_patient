@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="765.0" style="-fx-background-color: #f1e3d3;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListeConsultationsController">
    <children>
-      <Pane layoutX="-1.0" prefHeight="53.0" prefWidth="765.0" style="-fx-background-color: #9a8c98;">
+      <Pane layoutX="-1.0" prefHeight="53.0" prefWidth="765.0" style="-fx-background-color: #9a8c98;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="23.0" layoutY="10.0" text="Liste des consultations" textFill="#f0eded">
                <font>

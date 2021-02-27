@@ -33,7 +33,6 @@ public class NewConsultationController {
 	private ArrayList<Patient> listPatients = new ArrayList<Patient>();
 	private ArrayList<Medecin> listMedecins = new ArrayList<Medecin>();
 	private ArrayList<Consultation> listConsultations = new ArrayList<Consultation>();
-	private Action action;
     
     private Patient selectedPatient;
 	private Medecin selectedMedecin;
@@ -233,6 +232,7 @@ public class NewConsultationController {
 		db.update(sql_consultation);
 		
 		this.initTable();
+		
     	this.refreshAction();
 	}
     
@@ -245,30 +245,11 @@ public class NewConsultationController {
     }
     
     private void refreshAction() {
-		String action_type = this.action.getType();
+		btnEnregistrer.setDisable(false);
 		
-		if (action_type == "ADD") {
-			btnEnregistrer.setDisable(false);
-			
-			lblNomPatient.setText("");
-			lblNomMedecin.setText("");
-			txtObservation.setText("");
-		}
+		lblNomPatient.setText("patient: N/A");
+		lblNomMedecin.setText("medecin: N/A");
+		txtObservation.setText("");
 	}
-    
-    class Action {
-		private String type;
-		
-		public Action(String type) {
-			this.type = type;
-		}
 
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-	}
 }

@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="1003.0" style="-fx-background-color: #ffdccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MedecinsController">
    <children>
-      <Pane layoutX="-29.0" prefHeight="73.0" prefWidth="1033.0" style="-fx-background-color: #e29578;">
+      <Pane layoutX="-29.0" prefHeight="73.0" prefWidth="1033.0" style="-fx-background-color: #e29578;" AnchorPane.leftAnchor="-29.0" AnchorPane.rightAnchor="-1.3333333333332575" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="51.0" layoutY="18.0" text="Gestion des médecins" textFill="#f7f2f2">
                <font>

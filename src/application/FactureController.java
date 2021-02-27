@@ -179,6 +179,8 @@ public class FactureController {
 		tbFacture.getItems().setAll(lignesFacture);
 		
 		this.totalMedicament();
+		
+		this.refreshAction();
 	}
 	
 	public int totalMedicament() {
@@ -239,6 +241,8 @@ public class FactureController {
 		} catch(Exception er) {
 			System.out.println("error :" + er.getMessage());
 		}
+		this.action.setType("ADD");
+		this.refreshAction();
 	}
 	
 	public void deleteFacture(int id) {
