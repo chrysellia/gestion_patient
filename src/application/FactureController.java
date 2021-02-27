@@ -7,6 +7,7 @@ import java.util.List;
 import java.sql.*;
 
 import application.PatientsController.Action;
+import application.holder.ConsultationHolder;
 import application.models.Consultation;
 import application.models.Database;
 import application.models.Facture;
@@ -64,12 +65,15 @@ public class FactureController {
     @FXML private TableColumn<Medicament, String> colDesignationMedicament;
     @FXML private TableColumn<Medicament, String> colPrixMedicament;
     
-    private Consultation defaultConsultation;
     
     public void initialize() {
 		initTable();
 		
-		//lblPatient.setText("Nom du patient : " + this.defaultConsultation.getPatient());
+		ConsultationHolder cHolder = ConsultationHolder.getInstance();
+        Consultation currentConsultation = cHolder.getConsultation();
+		
+		lblPatient.setText("Nom du patient : " + currentConsultation.getPatient());
+		//		 " / Médecin traitant : " + currentConsultation.getMedecin()
 		
 		btnAdd.setOnAction(addHandler);
 		btnDelete.setDisable(true);
@@ -198,7 +202,9 @@ public class FactureController {
 		int lastInsertId = 0;
 		try {
 			Database db = new Database();
-			String sql_facture = "INSERT INTO factures (montant_total) VALUES('" + this.totalMedicament() + "')";
+			ConsultationHolder cHolder = ConsultationHolder.getInstance();
+			Consultation currentConsultation = cHolder.getConsultation();
+			String sql_facture = "INSERT INTO factures (consultation_id, montant_total) VALUES(' " + currentConsultation.getId()  + " ', '" + this.totalMedicament() + "')";
 			db.connect();
 			String columns[] = new String[] {"id"};
 			
@@ -305,8 +311,4 @@ public class FactureController {
 			
 		}
 	};
-	
-	public void setConsultation(Consultation consultation) {
-		this.defaultConsultation = consultation;
-	}
 }

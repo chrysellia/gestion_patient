@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import application.holder.ConsultationHolder;
 import application.models.Consultation;
 import application.models.Database;
 import javafx.event.ActionEvent;
@@ -135,16 +136,15 @@ public class ListeConsultationsController {
 	}
 
     private void createFacture() {
+
+        ConsultationHolder cHolder = ConsultationHolder.getInstance();
+        cHolder.setConsultation(this.selectedConsultation);
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/Facture.fxml"));
         Parent root;
         
         try {
             root = loader.load();
-            //Récupérer le controller du deuxiï¿½me scï¿½ne
-            FactureController facture = loader.getController();
-            facture.setConsultation(this.selectedConsultation);
-            
-            //Afficher les éléments dans la deuxième scène
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
