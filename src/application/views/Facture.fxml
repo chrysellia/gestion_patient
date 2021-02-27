@@ -7,11 +7,12 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FactureController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="991.0" style="-fx-background-color: #ffe6a7;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FactureController">
    <children>
-      <TableView fx:id="tbFacture" layoutX="349.0" layoutY="158.0" prefHeight="279.0" prefWidth="620.0">
+      <TableView fx:id="tbFacture" layoutX="349.0" layoutY="215.0" prefHeight="279.0" prefWidth="620.0">
         <columns>
           <TableColumn fx:id="colDesignation" prefWidth="124.66665649414062" text="Désignation" />
           <TableColumn fx:id="colQuantite" prefWidth="114.66671752929688" text="Quantité" />
@@ -20,64 +21,68 @@
             <TableColumn fx:id="colTotal" prefWidth="134.6666259765625" text="Total" />
         </columns>
       </TableView>
-      <Button fx:id="btnValidate" layoutX="849.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Valider">
+      <Button fx:id="btnValidate" layoutX="849.0" layoutY="555.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" style="-fx-background-color: #99582a;" text="Valider" textFill="#eee6e6">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="234.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Supprimer">
+      <Button fx:id="btnDelete" layoutX="234.0" layoutY="626.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #bb9457;" text="Supprimer" textFill="#f5f1f1">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnAdd" layoutX="234.0" layoutY="373.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Ajouter">
+      <Button fx:id="btnAdd" layoutX="230.0" layoutY="423.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #432818;" text="Ajouter" textFill="#f3eded">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="37.0" layoutY="373.0" prefHeight="25.0" prefWidth="76.0" text="Quantité :">
+      <Label layoutX="37.0" layoutY="423.0" prefHeight="25.0" prefWidth="76.0" text="Quantité :">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="fieldQuantite" alignment="CENTER" layoutX="113.0" layoutY="373.0" prefHeight="25.0" prefWidth="91.0" />
-      <Label layoutX="817.0" layoutY="447.0" prefHeight="25.0" prefWidth="63.0" text="TOTAL =">
+      <TextField fx:id="fieldQuantite" alignment="CENTER" layoutX="113.0" layoutY="423.0" prefHeight="25.0" prefWidth="91.0" />
+      <Label layoutX="817.0" layoutY="506.0" prefHeight="25.0" prefWidth="63.0" text="TOTAL =">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="37.0" layoutY="124.0" text="Médicaments">
+      <Label layoutX="37.0" layoutY="171.0" text="Médicaments">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="37.0" layoutY="21.0" text="Création d'une facture (ordonnance)">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tbMedicament" layoutX="37.0" layoutY="158.0" prefHeight="200.0" prefWidth="289.0">
+      <TableView fx:id="tbMedicament" layoutX="33.0" layoutY="215.0" prefHeight="200.0" prefWidth="289.0">
         <columns>
           <TableColumn fx:id="colDesignationMedicament" prefWidth="112.66669082641602" text="Nom" />
           <TableColumn fx:id="colPrixMedicament" prefWidth="134.66661071777344" text="Prix" />
         </columns>
       </TableView>
-      <Label fx:id="textTotal" layoutX="919.0" layoutY="451.0" prefHeight="17.0" prefWidth="50.0" text="0 Ar" textAlignment="RIGHT" />
-      <Label fx:id="lblPatient" layoutX="37.0" layoutY="74.0" text="Nom du patient :">
+      <Label fx:id="textTotal" layoutX="919.0" layoutY="510.0" prefHeight="17.0" prefWidth="50.0" text="0 Ar" textAlignment="RIGHT" />
+      <Label fx:id="lblPatient" layoutX="33.0" layoutY="110.0" text="Nom du patient :">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="349.0" layoutY="124.0" text="Contenu de la facture">
+      <Label layoutX="349.0" layoutY="171.0" text="Contenu de la facture">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="37.0" layoutY="412.0" prefHeight="25.0" prefWidth="76.0" text="Posologie :">
+      <Label layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="76.0" text="Posologie :">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="txtPosologie" layoutX="37.0" layoutY="445.0" prefHeight="124.0" prefWidth="297.0" />
+      <TextArea fx:id="txtPosologie" layoutX="29.0" layoutY="493.0" prefHeight="124.0" prefWidth="297.0" />
+      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="102.0" prefWidth="991.0" style="-fx-background-color: #6f1d1b;">
+         <children>
+            <Label layoutX="27.0" layoutY="25.0" text="Création d'une facture (ordonnance)" textFill="#f9f9f9">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
