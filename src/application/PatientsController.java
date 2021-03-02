@@ -96,9 +96,11 @@ public class PatientsController {
     
     private void initTable() {
 		colId.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("id"));
+		colId.setStyle( "-fx-alignment: CENTER");
 		colNom.setCellValueFactory(new PropertyValueFactory<Patient, String>("nom"));
 		colPrenom.setCellValueFactory(new PropertyValueFactory<Patient, String>("prenom"));
 		colDateNaissance.setCellValueFactory(new PropertyValueFactory<Patient, Date>("dateNaissance"));
+		colDateNaissance.setStyle( "-fx-alignment: CENTER;");
 		colAdresse.setCellValueFactory(new PropertyValueFactory<Patient, String>("adresse"));
 		colTelephone.setCellValueFactory(new PropertyValueFactory<Patient, String>("telephone"));
 		// colDateNaissance.setCellValueFactory(cellData -> cellData.getValue().getDateNaissance());

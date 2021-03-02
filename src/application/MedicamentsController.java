@@ -69,8 +69,10 @@ public class MedicamentsController {
 	
 	private void initTable() {
 		colId.setCellValueFactory(new PropertyValueFactory<Medicament, Integer>("id"));
+		colId.setStyle( "-fx-alignment: CENTER;");
 		colDesignation.setCellValueFactory(new PropertyValueFactory<Medicament, String>("designation"));
 		colPrix.setCellValueFactory(new PropertyValueFactory<Medicament, String>("prix"));;
+		colPrix.setStyle( "-fx-alignment: CENTER-RIGHT;");
 		
 		listMedicament = new ArrayList<Medicament>();
 		

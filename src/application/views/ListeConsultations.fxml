@@ -38,7 +38,7 @@
                   <Insets />
                </HBox.margin>
             </Label>
-            <DatePicker>
+            <DatePicker fx:id="startDate">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -51,12 +51,12 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <DatePicker>
+            <DatePicker fx:id="endDate">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
             </DatePicker>
-            <Button mnemonicParsing="false" style="-fx-background-color: #6d597a;" text="Filtrer" textFill="#f7efef">
+            <Button fx:id="fetchDate" mnemonicParsing="false" onAction="#getDate" style="-fx-background-color: #6d597a;" text="Filtrer" textFill="#f7efef">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

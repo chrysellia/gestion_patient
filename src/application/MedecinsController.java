@@ -84,11 +84,13 @@ public class MedecinsController {
 	
 	private void initTable() {
 		colId.setCellValueFactory(new PropertyValueFactory<Medecin, Integer>("id"));
+		colId.setStyle( "-fx-alignment: CENTER");
 		colNom.setCellValueFactory(new PropertyValueFactory<Medecin, String>("nom"));
 		colCategorie.setCellValueFactory(new PropertyValueFactory<Medecin, String>("categorie"));
 		colTelephone.setCellValueFactory(new PropertyValueFactory<Medecin, String>("telephone"));
 		colTelephone.setCellValueFactory(new PropertyValueFactory<Medecin, String>("telephone"));
 		colTotalConsultation.setCellValueFactory(new PropertyValueFactory<Medecin, String>("totalConsultation"));
+		colTotalConsultation.setStyle( "-fx-alignment: CENTER");
 		
 		listMedecins = new ArrayList<Medecin>();
 		

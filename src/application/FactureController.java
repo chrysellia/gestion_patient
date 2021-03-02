@@ -106,8 +106,11 @@ public class FactureController {
     	// Initialisation table facture contenu
     	colDesignation.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("designation"));
     	colQuantite.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("quantite"));
+    	colQuantite.setStyle( "-fx-alignement: CENTER;");
     	colPrixUnitaire.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("prixUnitaire"));
+    	colPrixUnitaire.setStyle( "-fx-alignement: CENTER-RIGHT;");
     	colTotal.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("sousTotal"));
+    	colTotal.setStyle( "-fx-alignement: CENTER-RIGHT;");
     	colPosologie.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("posologie"));
     	
     	// Initialisation table medicament

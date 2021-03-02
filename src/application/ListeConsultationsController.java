@@ -1,18 +1,22 @@
 package application;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import application.holder.ConsultationHolder;
 import application.models.Consultation;
 import application.models.Database;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,11 +28,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 
 public class ListeConsultationsController {
 	
@@ -42,8 +42,27 @@ public class ListeConsultationsController {
 	@FXML private TableColumn<Consultation, String> colObservations;
 	@FXML private Button btnAddFacture;
 	@FXML private Button btnPrint;
+	@FXML private DatePicker startDate;
+    @FXML private DatePicker endDate;
+    @FXML private Button fetchDate;
+    
+    @FXML
+    void getDate(ActionEvent event) {
+    	DatePicker datePicker = new DatePicker();
+    	LocalDate value = startDate.getValue();
+    	LocalDate value1 = endDate.getValue();
+    	System.out.println(value);
+    	System.out.println(value1);
+    }
 	
 	private Consultation selectedConsultation;
+	
+	private void getDate() {
+		DatePicker datePicker = new DatePicker();
+	    datePicker.setOnAction(event -> {
+	        System.out.println("Date choisie: " + datePicker.getValue());
+	    });
+	}
 	
 	private void loadStage(String fxml) {
 		try {
@@ -89,9 +108,9 @@ public class ListeConsultationsController {
 	public void initialize() {
 		initTable();
 		btnAddFacture.setDisable(true);
-		btnPrint.setDisable(true);
+		//btnPrint.setDisable(true);
 		btnAddFacture.setOnAction(this.addHandler);
-		btnPrint.setOnAction(this.printHandler);
+		//btnPrint.setOnAction(this.printHandler);
 		
 		tblListConsultation.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
 			if (newSelection != null) {
@@ -102,9 +121,11 @@ public class ListeConsultationsController {
 	
 	private void initTable() {
 		colId.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("id"));
+		colId.setStyle( "-fx-alignment: CENTER;");
 		colPatient.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("patient"));
 		colMedecin.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("medecin"));
 		colDateConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, Date>("dateConsultation"));
+		colDateConsultation.setStyle( "-fx-alignment: CENTER");
 		colObservations.setCellValueFactory(new PropertyValueFactory<Consultation, String>("observations"));
 	
 		listConsultations = new ArrayList<Consultation>();
@@ -153,68 +174,6 @@ public class ListeConsultationsController {
             e.printStackTrace();
         }
     }
-    
-    private void printFacture() {
-    	//Creating PDF document object 
-        PDDocument document = new PDDocument();   
-        
-
-    	//Creating a blank page 
-    	PDPage blankPage = new PDPage();
-
-    	//Adding the blank page to the document
-    	document.addPage( blankPage );
-         
-        //Saving the document
-        try {
-        	String pdf_name = this.selectedConsultation.getId() + "_facture" +  this.selectedConsultation.getPatient() + ".pdf";
-        	//File file = new File(pdf_name);
-
-	        //Retrieving the pages of the document 
-	        PDPage page = document.getPage(0);
-	        PDPageContentStream contentStream = new PDPageContentStream(document, page);
-	        
-	        //Begin the Content stream 
-	        contentStream.beginText(); 
-	        
-	        //Setting the font to the Content stream  
-	        contentStream.setFont(PDType1Font.COURIER, 12);
-	        
-	        //Setting the position for the line 
-	        contentStream.newLineAtOffset(25, 725);
-	        
-	        String text = "FACTURE DU CLIENT";
-	        contentStream.newLine(); 
-	        String nom_medecin = "Nom du médecin";
-	        contentStream.newLine(); 
-	        String nom_patient = "Nom du patient";
-
-	        //Adding text in the form of string 
-	        contentStream.showText(text);  
-	        contentStream.showText(nom_medecin);  
-	        contentStream.showText(nom_patient);  
-	        
-	        //Ending the content stream
-	        contentStream.endText();
-	        
-	        //Closing the content stream
-	        contentStream.close();
-	        
-	        //Creating the PDDocumentInformation object 
-	        PDDocumentInformation pdd = document.getDocumentInformation();
-	        
-	        // Setting the title of the document
-	        pdd.setTitle("FACTURE " +  this.selectedConsultation.getPatient()); 
-	        
-	        document.save("./pdf/" + pdf_name);
-	        
-	        //Closing the document  
-	        document.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
 	
 	EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
 		@Override
@@ -223,13 +182,12 @@ public class ListeConsultationsController {
 		}
 	};
 	
-	EventHandler<ActionEvent> printHandler = new EventHandler<ActionEvent>() {
+	/*EventHandler<ActionEvent> printHandler = new EventHandler<ActionEvent>() {
 		@Override
     	public void handle(ActionEvent event) {
 			printFacture();
 		}
-	};
-
+	};*/
 	
 	private void selectConsultation(Consultation consultation) {
 		this.selectedConsultation = consultation;

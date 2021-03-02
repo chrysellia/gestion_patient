@@ -118,6 +118,7 @@ public class NewConsultationController {
     
     private void initTablePatient () {
     	colIdPatient.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("id"));
+    	colIdPatient.setStyle( "-fx-alignment: CENTER;");
     	colPatient.setCellValueFactory(new PropertyValueFactory<Patient, String>("nom"));
     	listPatients = new ArrayList<Patient>();
     	ResultSet rs = this.getAllPatients();
@@ -144,6 +145,7 @@ public class NewConsultationController {
     
     private void initTableMedecin() {
     	colIdMedecin.setCellValueFactory(new PropertyValueFactory<Medecin, Integer>("id"));
+    	colIdMedecin.setStyle( "-fx-alignment: CENTER;");
     	colMedecin.setCellValueFactory(new PropertyValueFactory<Medecin, String>("nom"));
     	listMedecins = new ArrayList<Medecin>();
     	ResultSet rs1 = this.getAllMedecins();
@@ -169,9 +171,11 @@ public class NewConsultationController {
     
     private void initTableConsultation() {
         colIdConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, Integer>("id"));
+        colIdConsultation.setStyle( "-fx-alignment: CENTER;");
         colPatientConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, String>("patient"));
         colMedecinConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, String>("medecin"));
         colDateConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, String>("dateConsultation"));
+        colDateConsultation.setStyle( "-fx-alignment: CENTER;");
         colObservationConsultation.setCellValueFactory(new PropertyValueFactory<Consultation, String>("observations"));
     	
         listConsultations = new ArrayList<Consultation>();

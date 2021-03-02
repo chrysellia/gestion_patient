@@ -50,7 +50,11 @@ public class Facture {
 	public void setMontantTotal(String montantTotal) {
 		this.montantTotal = montantTotal;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Facture [factureId=" + factureId + ", medecin=" + medecin + ", patient=" + patient
+				+ ", dateConsultation=" + dateConsultation + ", montantTotal=" + montantTotal + "]";
+	}
 }
 
