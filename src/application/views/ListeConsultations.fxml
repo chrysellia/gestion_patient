@@ -22,7 +22,7 @@
             </Label>
          </children>
       </Pane>
-      <TableView fx:id="tblListConsultation" layoutX="19.0" layoutY="126.0" prefHeight="392.0" prefWidth="715.0">
+      <TableView fx:id="tblListConsultation" layoutX="19.0" layoutY="126.0" prefHeight="392.0" prefWidth="710.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="77.33330917358398" text="ID" />
           <TableColumn fx:id="colPatient" prefWidth="162.6666488647461" text="Nom du patient" />
@@ -74,10 +74,5 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="btnPrint" layoutX="667.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #6d597a;" text="Print" textFill="#f5f1f1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

@@ -235,7 +235,7 @@ public class FactureController {
 				FactureContenu item = lignesFacture.get(i);
 				
 				Database db = new Database();
-				String sql_contenu = "INSERT INTO facture_contenus (facture_id, designation, medicamentId, quantite, prixUnitaire, sousTotal, posologie) VALUES ('" + lastInsertId +"','" + item.getDesignation() +"', '" + item.getMedicamentId() +"', '" + item.getQuantite() +"','" + item.getSousTotal() + "', '" + item.getPrixUnitaire() + "', '" + item.getPosologie()+"')";
+				String sql_contenu = "INSERT INTO facture_contenus (facture_id, designation, medicamentId, quantite, prixUnitaire, sousTotal, posologie) VALUES ('" + lastInsertId +"','" + item.getDesignation() +"', '" + item.getMedicamentId() +"', '" + item.getPrixUnitaire() + "','" + item.getQuantite() +"','" + item.getSousTotal() + "',  '" + item.getPosologie()+"')";
 				db.connect();
 				ResultSet res = db.update(sql_contenu);
 				System.out.println(sql_contenu);

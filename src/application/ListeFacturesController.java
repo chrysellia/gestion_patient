@@ -2,6 +2,7 @@ package application;
 
 import application.models.Database;
 import application.models.Facture;
+import application.models.FactureContenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -148,13 +149,47 @@ public class ListeFacturesController {
             //Setting the position for the line
             contentStream.newLineAtOffset(25, 725);
 
-            String text1 = "This is an example of adding text to a page in the pdf document. we can add as many lines";
-            String text2 = "as we want like this using the ShowText()  method of the ContentStream class";
+            //String text1 = this.selectedFacture.getFactureId(); 
+            String text1 = "FACTURE";
+            String text2 = this.selectedFacture.getPatient();
+            String text3 = this.selectedFacture.getMedecin();
+            Date text4 = this.selectedFacture.getDateConsultation();
+            String text5 = this.selectedFacture.getMontantTotal();
+            String text6 = "Centre Hospitalier Universitaire Befelatanana";
 
             //Adding text in the form of string
             contentStream.showText(text1);
             contentStream.newLine();
-            contentStream.showText(text2);
+            contentStream.showText("Nom du patient : " + text2);
+            contentStream.newLine();
+            contentStream.showText("Nom du médecin : " + text3);
+            contentStream.newLine();
+            contentStream.showText("Date de consultation: " + text4);
+            
+            ResultSet rsLigneFacture = this.getLigneFacture(this.selectedFacture.getFactureId());
+            
+            try {
+    			while(rsLigneFacture.next()) {
+    				int id  = rsLigneFacture.getInt("id");
+    				String designation = rsLigneFacture.getString("designation");
+    				// int medicamentId = rsLigneFacture.getInt("medicamentId");
+    				// String posologie = rsLigneFacture.getString("posologie");
+    				String quantite = rsLigneFacture.getString("quantite");
+    				// String prixUnitaire = rsLigneFacture.getString("prixUnitaire");
+    				String sousTotal = rsLigneFacture.getString("sousTotal");
+    				
+    				contentStream.newLine();
+    	            contentStream.showText(designation + " x " + quantite + " " + sousTotal);
+    			}
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            
+            contentStream.newLine();
+            contentStream.showText("Montant total : " + text5);
+            contentStream.newLine();
+            contentStream.showText("Lieu : " + text6);
             //Ending the content stream
             contentStream.endText();
 
