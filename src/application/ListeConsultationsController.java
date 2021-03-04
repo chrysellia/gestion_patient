@@ -115,7 +115,7 @@ public class ListeConsultationsController {
 		tblListConsultation.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				selectConsultation(newSelection);
-      }
+			}
 		});
 	}
 	
@@ -192,6 +192,5 @@ public class ListeConsultationsController {
 	private void selectConsultation(Consultation consultation) {
 		this.selectedConsultation = consultation;
 		this.btnAddFacture.setDisable(false);
-		this.btnPrint.setDisable(false);
 	}
 }

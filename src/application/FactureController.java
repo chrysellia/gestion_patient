@@ -15,6 +15,7 @@ import application.models.FactureContenu;
 import application.models.Medecin;
 import application.models.Medicament;
 import application.models.Patient;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,7 +41,7 @@ public class FactureController {
 	
 	@FXML private TableView<FactureContenu> tbFacture;
 	
-    @FXML private TableView<Medicament> tbMedicament;
+    @FXML private TableView<Medicament> tblMedicament;
     
     private Medicament selectedMedicament;
     private FactureContenu selectedItem;
@@ -81,7 +83,7 @@ public class FactureController {
 		btnDelete.setOnAction(deleteHandler);
 		//btnDelete.setOnAction(deleteHandler);
 		
-		tbMedicament.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
+		tblMedicament.getSelectionModel().selectedItemProperty().addListener((object, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 		        fillEdit(newSelection);
 		    }
@@ -93,8 +95,7 @@ public class FactureController {
 		    }
 		});
     }
-
-    
+ 
     private ResultSet getAllMedicaments() {
     	Database db = new Database();
     	db.connect();
@@ -106,16 +107,17 @@ public class FactureController {
     	// Initialisation table facture contenu
     	colDesignation.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("designation"));
     	colQuantite.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("quantite"));
-    	colQuantite.setStyle( "-fx-alignement: CENTER;");
+    	colQuantite.setStyle( "-fx-alignment: CENTER;");
     	colPrixUnitaire.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("prixUnitaire"));
-    	colPrixUnitaire.setStyle( "-fx-alignement: CENTER-RIGHT;");
+    	colPrixUnitaire.setStyle( "-fx-alignment: CENTER-RIGHT");
     	colTotal.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("sousTotal"));
-    	colTotal.setStyle( "-fx-alignement: CENTER-RIGHT;");
+    	colTotal.setStyle( "-fx-alignment: CENTER-RIGHT");
     	colPosologie.setCellValueFactory(new PropertyValueFactory<FactureContenu, String>("posologie"));
     	
     	// Initialisation table medicament
     	colDesignationMedicament.setCellValueFactory(new PropertyValueFactory<Medicament, String>("designation"));
 		colPrixMedicament.setCellValueFactory(new PropertyValueFactory<Medicament, String>("prix"));
+		colPrixMedicament.setStyle( "-fx-alignment: CENTER-RIGHT;");
         
 		listMedicaments = new ArrayList<Medicament>();
 		
@@ -140,7 +142,7 @@ public class FactureController {
 			e.printStackTrace();
 		}
 		
-		tbMedicament.getItems().setAll(listMedicaments);
+		tblMedicament.getItems().setAll(listMedicaments);
 	}
         	
 	private void fillEdit(Medicament medicament) {
@@ -170,19 +172,13 @@ public class FactureController {
 		int sousTotal = prix * quantite;
 		itemFacture.setSousTotal("" + sousTotal);
 
-		try {
-			this.lignesFacture.add(itemFacture);
-		} catch (Exception er) {
-			System.out.println("error : " + er.getMessage());
-		}
 		
-		// System.out.println("test : " + this.lignesFacture.toString());
+		this.lignesFacture.add(itemFacture);
 		
+		System.out.println("test : " + this.lignesFacture.toString());
 		
 		tbFacture.getItems().setAll(lignesFacture);
-		
 		this.totalMedicament();
-		
 		this.refreshAction();
 	}
 	
@@ -191,7 +187,6 @@ public class FactureController {
 
 		for (int i = 0; i < lignesFacture.size(); i++) {
 			FactureContenu item = lignesFacture.get(i);
-			System.out.println(item);
 			int sous_total = Integer.parseInt(item.getSousTotal());
 			total += sous_total;
 		}
@@ -201,7 +196,6 @@ public class FactureController {
 		return total;
 	}
 	
-	
 	public void saveFacture() {
 		// 1- Insertion de la facture qui va contenir le détail général
 		int lastInsertId = 0;
@@ -209,7 +203,7 @@ public class FactureController {
 			Database db = new Database();
 			ConsultationHolder cHolder = ConsultationHolder.getInstance();
 			Consultation currentConsultation = cHolder.getConsultation();
-			String sql_facture = "INSERT INTO factures (consultation_id, montant_total) VALUES(' " + currentConsultation.getId()  + " ', '" + this.totalMedicament() + "')";
+			String sql_facture = "INSERT INTO factures (consultation_id, montantTotal) VALUES(' " + currentConsultation.getId()  + " ', '" + this.totalMedicament() + "')";
 			db.connect();
 			String columns[] = new String[] {"id"};
 			
@@ -220,8 +214,6 @@ public class FactureController {
 				if ( rs.next() ) {
 					lastInsertId = rs.getInt(1);
 	            }
-				
-				System.out.println("lastInsertId " + lastInsertId);
 			}
 			
 			
@@ -237,13 +229,12 @@ public class FactureController {
 				Database db = new Database();
 				String sql_contenu = "INSERT INTO facture_contenus (facture_id, designation, medicamentId, quantite, prixUnitaire, sousTotal, posologie) VALUES ('" + lastInsertId +"','" + item.getDesignation() +"', '" + item.getMedicamentId() +"', '" + item.getPrixUnitaire() + "','" + item.getQuantite() +"','" + item.getSousTotal() + "',  '" + item.getPosologie()+"')";
 				db.connect();
-				ResultSet res = db.update(sql_contenu);
-				System.out.println(sql_contenu);
+				db.update(sql_contenu);
 			}
-			
 		} catch(Exception er) {
 			System.out.println("error :" + er.getMessage());
 		}
+		
 		this.action.setType("ADD");
 		this.refreshAction();
 	}
@@ -291,12 +282,7 @@ public class FactureController {
 	EventHandler<ActionEvent> addHandler = new EventHandler<ActionEvent>() {
 		@Override
     	public void handle(ActionEvent event) {
-			try {
-				addItem();
-			} catch(Exception er) {
-				System.out.println("" + er.getMessage());
-			}
-			
+			addItem();
 		}
 	};
 	
@@ -307,6 +293,7 @@ public class FactureController {
 		}
 	};
 	
+	
 	EventHandler<ActionEvent> saveHandler = new EventHandler<ActionEvent>() {
 		@Override
     	public void handle(ActionEvent event) {
@@ -315,7 +302,6 @@ public class FactureController {
 			} catch(Exception er) {
 				System.out.println("" + er.getMessage());
 			}
-			
 		}
 	};
 }

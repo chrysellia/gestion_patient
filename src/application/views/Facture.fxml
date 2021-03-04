@@ -52,7 +52,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tbMedicament" layoutX="33.0" layoutY="215.0" prefHeight="200.0" prefWidth="289.0">
+      <TableView fx:id="tblMedicament" layoutX="33.0" layoutY="215.0" prefHeight="200.0" prefWidth="289.0">
         <columns>
           <TableColumn fx:id="colDesignationMedicament" prefWidth="112.66669082641602" text="Nom" />
           <TableColumn fx:id="colPrixMedicament" prefWidth="134.66661071777344" text="Prix" />
