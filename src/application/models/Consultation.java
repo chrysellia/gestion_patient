@@ -1,6 +1,7 @@
 package application.models;
 
 import java.sql.Date;
+import java.time.chrono.ChronoLocalDate;
 
 public class Consultation {
 	private int id;
@@ -84,5 +85,10 @@ public class Consultation {
 		return "Consultation [id=" + id + ", patient_id=" + patient_id + ", medecin_id=" + medecin_id + ", medecin="
 				+ medecin + ", patient=" + patient + ", dateConsultation=" + dateConsultation + ", date_consultation="
 				+ date_consultation + ", observations=" + observations + "]";
+	}
+
+	public ChronoLocalDate getOpenDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

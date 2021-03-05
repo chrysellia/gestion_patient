@@ -56,7 +56,7 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </DatePicker>
-            <Button fx:id="fetchDate" mnemonicParsing="false" onAction="#getDate" style="-fx-background-color: #6d597a;" text="Filtrer" textFill="#f7efef">
+            <Button fx:id="btnFilterDate" mnemonicParsing="false" style="-fx-background-color: #6d597a;" text="Filtrer" textFill="#f7efef">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
