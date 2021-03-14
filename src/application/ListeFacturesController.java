@@ -34,14 +34,11 @@ public class ListeFacturesController {
     @FXML private Button btnPrintFacture;
 
     @FXML private TableColumn<Facture, Integer> factureId;
-
     @FXML private TableColumn<Facture, String> colMedecin;
-
     @FXML private TableColumn<Facture, String> colPatient;
-
     @FXML private TableColumn<Facture, Date> colDateConsultation;
-
     @FXML private TableColumn<Facture, String> colMontantTotal;
+    @FXML private TableColumn<Facture, String> colObservation;
     
     private ResultSet getAllFactures() {
     	Database db = new Database();
@@ -51,7 +48,8 @@ public class ListeFacturesController {
     			"    consultations.dateConsultation,\r\n" + 
     			"    medecins.nom AS medecin,\r\n" + 
     			"    CONCAT(patients.nom, \" \", patients.prenom) AS patient, \r\n" + 
-    			"    factures.montantTotal\r\n" + 
+    			"    factures.montantTotal,\r\n" + 
+    			"    consultations.observations\r\n" + 
     			"FROM factures\r\n" + 
     			"INNER JOIN consultations ON consultations.id = factures.consultation_id\r\n" + 
     			"INNER JOIN medecins ON medecins.id = consultations.medecin_id\r\n" + 
@@ -93,6 +91,7 @@ public class ListeFacturesController {
     	colDateConsultation.setStyle( "-fx-alignment: CENTER;");
     	colMontantTotal.setCellValueFactory(new PropertyValueFactory<Facture, String>("montantTotal"));
     	colMontantTotal.setStyle( "-fx-alignment: CENTER-RIGHT;");
+    	colObservation.setCellValueFactory(new PropertyValueFactory<Facture, String>("observations"));
     	
     	listFactures = new ArrayList<Facture>();
     	ResultSet rs = this.getAllFactures();
@@ -104,6 +103,7 @@ public class ListeFacturesController {
 				String patient = rs.getString("patient");
 				Date dateConsultation = rs.getDate("dateConsultation");
 				String montantTotal = rs.getString("montantTotal");
+				String observations = rs.getString("observations");
 				
 				Facture facture = new Facture();
 				facture.setFactureId(factureId);
@@ -111,6 +111,7 @@ public class ListeFacturesController {
 				facture.setMedecin(medecin);
 				facture.setDateConsultation(dateConsultation);
 				facture.setMontantTotal(montantTotal);
+				facture.setObservations(observations);
 				
 				listFactures.add(facture);
 			}
@@ -158,7 +159,8 @@ public class ListeFacturesController {
             String strDate = "Date du : " + this.selectedFacture.getDateConsultation();
             String text2 = this.selectedFacture.getPatient();
             String text3 = this.selectedFacture.getMedecin();
-            String text5 = this.selectedFacture.getMontantTotal();
+            String montantTotal = this.selectedFacture.getMontantTotal();
+            String observations = this.selectedFacture.getObservations();
             // String text6 = "Centre Hospitalier Universitaire Befelatanana";
 
             // Adding text in the form of string
@@ -178,7 +180,7 @@ public class ListeFacturesController {
             contentStream.newLine();
             contentStream.showText("Designation | Quantité | Total");
             contentStream.newLine();
-            contentStream.showText("------------------------------");
+            contentStream.showText("----------- - -------- - -----");
             contentStream.newLine();
             
             ResultSet rsLigneFacture = this.getLigneFacture(this.selectedFacture.getFactureId());
@@ -201,17 +203,40 @@ public class ListeFacturesController {
     			e.printStackTrace();
     		}
             
+            Double tarifConsultation = 30000.0;
+            Double grandTotal = tarifConsultation + Double.parseDouble(montantTotal);
+            contentStream.newLine();
+            contentStream.showText("Frais consult. x 1 " + tarifConsultation);
             contentStream.newLine();
             contentStream.newLine();
             //Setting the font to the Content stream
             contentStream.setFont(PDType1Font.TIMES_BOLD, 17);
             
-            contentStream.showText("Montant total : " + text5);
+            contentStream.showText("Montant total : " + grandTotal + " MGA");
+            contentStream.newLine();
             contentStream.newLine();
             
             contentStream.setFont( PDType1Font.COURIER, 16 );
-            //contentStream.showText("Lieu : " + text6);
-            //Ending the content stream
+            contentStream.showText("Observations : " + observations);
+            
+            rsLigneFacture = this.getLigneFacture(this.selectedFacture.getFactureId());
+            
+            try {
+    			while(rsLigneFacture.next()) {
+    				// int id  = rsLigneFacture.getInt("id");
+    				String medicament = rsLigneFacture.getString("designation");
+    				// String prixUnitaire = rsLigneFacture.getString("prixUnitaire");
+    				String posologie = rsLigneFacture.getString("posologie");
+    				
+    				contentStream.newLine();
+    	            contentStream.showText(medicament + " : " + posologie);
+    			}
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            
+            // Ending the content stream
             contentStream.endText();
 
             System.out.println("Content added");

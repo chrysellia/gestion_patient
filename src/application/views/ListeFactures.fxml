@@ -23,10 +23,11 @@
       <TableView fx:id="tbListeFacture" layoutX="14.0" layoutY="114.0" prefHeight="357.0" prefWidth="549.0">
         <columns>
           <TableColumn fx:id="factureId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="colMedecin" prefWidth="116.00003814697266" text="Nom du médecin" />
-            <TableColumn fx:id="colPatient" prefWidth="117.33329772949219" text="Nom du patient" />
-            <TableColumn fx:id="colDateConsultation" prefWidth="122.66665649414062" text="Date de consultation" />
-            <TableColumn fx:id="colMontantTotal" prefWidth="113.99996948242188" text="Montant total" />
+          <TableColumn fx:id="colMedecin" prefWidth="115" text="Nom du médecin" />
+          <TableColumn fx:id="colPatient" prefWidth="115" text="Nom du patient" />
+          <TableColumn fx:id="colDateConsultation" prefWidth="120" text="Date de consultation" />
+          <TableColumn fx:id="colMontantTotal" prefWidth="110" text="Montant total" />
+          <TableColumn fx:id="colObservation" prefWidth="90" text="Observation" />
         </columns>
       </TableView>
    </children>

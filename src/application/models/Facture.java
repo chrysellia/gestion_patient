@@ -8,6 +8,7 @@ public class Facture {
 	private String patient;
 	private Date dateConsultation;
 	private String montantTotal;
+	private String observations;
 	
 	public Facture( ) {}
 	
@@ -55,6 +56,14 @@ public class Facture {
 	public String toString() {
 		return "Facture [factureId=" + factureId + ", medecin=" + medecin + ", patient=" + patient
 				+ ", dateConsultation=" + dateConsultation + ", montantTotal=" + montantTotal + "]";
+	}
+
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 }
 
