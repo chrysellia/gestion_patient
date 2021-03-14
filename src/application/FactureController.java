@@ -235,8 +235,11 @@ public class FactureController {
 			System.out.println("error :" + er.getMessage());
 		}
 		
-		this.action.setType("ADD");
-		this.refreshAction();
+		//this.action.setType("ADD");
+		//this.refreshAction();
+		
+		Stage stage = (Stage) btnValidate.getScene().getWindow();
+		stage.close();
 	}
 	
 	public void deleteFacture(int id) {
