@@ -18,10 +18,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import java.awt.Desktop;
 
 public class ListeFacturesController {
 
@@ -125,52 +125,67 @@ public class ListeFacturesController {
     private void printFacture() {       
         //Saving the document
         try {
-        	//Loading an existing document
-            File file = new File("C:/PdfBox_Examples/my_pdf.pdf");
+        	// Loading an existing document
+        	String filename = "FACTURE_" + this.selectedFacture.getPatient() + this.selectedFacture.getDateConsultation();
+        	
+            File file = new File("C:/PdfBox_Examples/" + filename + ".pdf");
             PDDocument document = new PDDocument(); 
-          //Creating a blank page 
+            // Creating a blank page 
         	PDPage blankPage = new PDPage();
             document.addPage( blankPage );
              
-            //Creating a PDF Document
+            // Creating a PDF Document
             PDPage page = document.getPage(0);  
              
             PDPageContentStream contentStream = new PDPageContentStream(document, page); 
              
-            //Begin the Content stream 
+            // Begin the Content stream 
             contentStream.beginText(); 
              
-            //Setting the font to the Content stream
-            contentStream.setFont( PDType1Font.TIMES_ROMAN, 16 );
+            // Setting the font to the Content stream
+            contentStream.setFont( PDType1Font.COURIER, 16 );
              
-            //Setting the leading
+            // Setting the leading
             contentStream.setLeading(14.5f);
 
-            //Setting the position for the line
+            // Setting the position for the line
             contentStream.newLineAtOffset(25, 725);
 
-            //String text1 = this.selectedFacture.getFactureId(); 
-            String text1 = "FACTURE";
+            
+            String text1 = "FACTURE DE CONSULTATION";
+            
+            
+            String strDate = "Date du : " + this.selectedFacture.getDateConsultation();
             String text2 = this.selectedFacture.getPatient();
             String text3 = this.selectedFacture.getMedecin();
-            Date text4 = this.selectedFacture.getDateConsultation();
             String text5 = this.selectedFacture.getMontantTotal();
-            String text6 = "Centre Hospitalier Universitaire Befelatanana";
+            // String text6 = "Centre Hospitalier Universitaire Befelatanana";
 
-            //Adding text in the form of string
+            // Adding text in the form of string
+            // String text1 = this.selectedFacture.getFactureId();
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 18);
             contentStream.showText(text1);
+            
+            contentStream.setFont( PDType1Font.COURIER, 16 );
+            contentStream.newLine();
+            contentStream.showText(strDate);
+            contentStream.newLine();
             contentStream.newLine();
             contentStream.showText("Nom du patient : " + text2);
             contentStream.newLine();
-            contentStream.showText("Nom du médecin : " + text3);
+            contentStream.showText("Médecin traitant : " + text3);
             contentStream.newLine();
-            contentStream.showText("Date de consultation: " + text4);
+            contentStream.newLine();
+            contentStream.showText("Designation | Quantité | Total");
+            contentStream.newLine();
+            contentStream.showText("------------------------------");
+            contentStream.newLine();
             
             ResultSet rsLigneFacture = this.getLigneFacture(this.selectedFacture.getFactureId());
             
             try {
     			while(rsLigneFacture.next()) {
-    				int id  = rsLigneFacture.getInt("id");
+    				// int id  = rsLigneFacture.getInt("id");
     				String designation = rsLigneFacture.getString("designation");
     				// int medicamentId = rsLigneFacture.getInt("medicamentId");
     				// String posologie = rsLigneFacture.getString("posologie");
@@ -187,9 +202,15 @@ public class ListeFacturesController {
     		}
             
             contentStream.newLine();
+            contentStream.newLine();
+            //Setting the font to the Content stream
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 17);
+            
             contentStream.showText("Montant total : " + text5);
             contentStream.newLine();
-            contentStream.showText("Lieu : " + text6);
+            
+            contentStream.setFont( PDType1Font.COURIER, 16 );
+            //contentStream.showText("Lieu : " + text6);
             //Ending the content stream
             contentStream.endText();
 
@@ -199,10 +220,14 @@ public class ListeFacturesController {
             contentStream.close();
 
             //Saving the document
-            document.save(new File("C:/PdfBox_Examples/new.pdf"));
+            document.save(file);
                   
             //Closing the document
             document.close();
+            
+            // Ouvrir le fichier automatiquement après sa création
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
